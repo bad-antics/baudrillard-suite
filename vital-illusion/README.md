@@ -1,211 +1,268 @@
 <div align="center">
 
+# ◈ VITAL-ILLUSION
+
 ```
-██╗   ██╗██╗████████╗ █████╗ ██╗          ██╗██╗     ██╗     ██╗   ██╗███████╗██╗ ██████╗ ███╗   ██╗
-██║   ██║██║╚══██╔══╝██╔══██╗██║          ██║██║     ██║     ██║   ██║██╔════╝██║██╔═══██╗████╗  ██║
-██║   ██║██║   ██║   ███████║██║          ██║██║     ██║     ██║   ██║███████╗██║██║   ██║██╔██╗ ██║
-╚██╗ ██╔╝██║   ██║   ██╔══██║██║          ██║██║     ██║     ██║   ██║╚════██║██║██║   ██║██║╚██╗██║
- ╚████╔╝ ██║   ██║   ██║  ██║███████╗     ██║███████╗███████╗╚██████╔╝███████║██║╚██████╔╝██║ ╚████║
-  ╚═══╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚══════╝     ╚═╝╚══════╝╚══════╝ ╚═════╝ ╚══════╝╚═╝ ╚═════╝ ╚═╝  ╚═══╝
-                              ◈ The Illusion of the Living ◈
+██╗   ██╗██╗████████╗ █████╗ ██╗         
+██║   ██║██║╚══██╔══╝██╔══██╗██║         
+██║   ██║██║   ██║   ███████║██║         
+╚██╗ ██╔╝██║   ██║   ██╔══██║██║         
+ ╚████╔╝ ██║   ██║   ██║  ██║███████╗    
+  ╚═══╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚══════╝    
+██╗██╗     ██╗     ██╗   ██╗███████╗██╗ ██████╗ ███╗   ██╗
+██║██║     ██║     ██║   ██║██╔════╝██║██╔═══██╗████╗  ██║
+██║██║     ██║     ██║   ██║███████╗██║██║   ██║██╔██╗ ██║
+██║██║     ██║     ██║   ██║╚════██║██║██║   ██║██║╚██╗██║
+██║███████╗███████╗╚██████╔╝███████║██║╚██████╔╝██║ ╚████║
+╚═╝╚══════╝╚══════╝ ╚═════╝ ╚══════╝╚═╝ ╚═════╝ ╚═╝  ╚═══╝
 ```
 
-<p><em>"Cloning, immortality, and the murder of the original."</em></p>
+<img src="https://img.shields.io/badge/DEEPFAKE-DETECTION-9B30FF?style=for-the-badge&labelColor=0D0D0D" alt="deepfake">
+<img src="https://img.shields.io/badge/SYNTHETIC-MEDIA-FF0066?style=for-the-badge&labelColor=0D0D0D" alt="synthetic">
+<img src="https://img.shields.io/badge/AI-DETECTION-00FF41?style=for-the-badge&labelColor=0D0D0D" alt="detection">
 
-<p>
-  <img src="https://img.shields.io/badge/baudrillard-suite-9B30FF?style=for-the-badge" alt="suite">
-  <img src="https://img.shields.io/badge/vital--illusion-deepfake%20detection-FF0066?style=for-the-badge" alt="vital-illusion">
-  <img src="https://img.shields.io/badge/python-3.10+-00FF41?style=for-the-badge&logo=python&logoColor=white" alt="python">
-</p>
+**DETECTING ARTIFICIAL LIFE**
 
-**Deepfake & Synthetic Media Detection - Spotting artificial life**
+*Deepfake analysis • Synthetic media detection • Manipulation forensics • Reality verification*
 
 </div>
 
 ---
 
-## 🔮 Concept
+## ◈ CONCEPT
 
-In "The Vital Illusion," Baudrillard explored cloning and the death of the original. When copies can exist without originals, what is "authentic"?
+Baudrillard wrote about the "vital illusion"—the way life itself becomes a simulation. In our age of AI-generated faces, voices, and videos, this illusion is literal. **vital-illusion** detects synthetic media and AI-generated content.
 
-**Vital-Illusion** detects synthetic media—deepfakes, AI-generated content, voice cloning—by searching for the absence of life. The artificial lacks something ineffable: the vital illusion.
-
----
-
-## ⚡ Detection Philosophy
-
-### The Vital Signs We Seek
-Real humans have micro-expressions, breath variations, blood flow, unconscious tells. AI lacks the "noise of being alive."
-
-### What We Detect
-- **Video Deepfakes**: Face swaps, lip sync, full synthetic
-- **Audio Clones**: Voice synthesis, cloned speech
-- **Text Generation**: AI-written content detection
-- **Image Synthesis**: GAN/diffusion artifacts
-- **Live Stream Manipulation**: Real-time deepfake detection
+*"The illusion of the world is not its unreality, but its resemblance to reality."*
 
 ---
 
-## 🛠️ Modules
+## ◈ DETECTION CAPABILITIES
 
-### 🎭 face-oracle
-*Deepfake video detection*
+### ▸ FACE ANALYSIS
 
-```bash
-vital-illusion face --input video.mp4
+Detect AI-generated or manipulated faces:
+
+```python
+from vital_illusion import FaceAnalyzer
+
+analyzer = FaceAnalyzer()
+
+# Analyze image
+result = analyzer.analyze("photo.jpg")
+
+print(f"Authenticity: {result.authenticity}%")
+print(f"Generation method: {result.method}")
+print(f"Confidence: {result.confidence}%")
+
+for artifact in result.artifacts:
+    print(f"▸ {artifact.type} at {artifact.location}")
+    print(f"  Evidence: {artifact.description}")
 ```
 
-- **Temporal coherence**: Do features flow naturally across frames?
-- **Micro-expression analysis**: Are unconscious expressions present?
-- **Lighting consistency**: Does skin react to light realistically?
-- **Physiological signals**: Can we detect pulse from face color?
-- **Artifact hunting**: GAN fingerprints, blending seams
+### ▸ VIDEO ANALYSIS
 
-### 🔊 voice-seance
-*Synthetic voice detection*
+Detect deepfake videos and face swaps:
 
-```bash
-vital-illusion voice --input audio.wav
+```python
+from vital_illusion import VideoAnalyzer
+
+analyzer = VideoAnalyzer()
+
+# Real-time analysis
+async for frame_result in analyzer.stream("video.mp4"):
+    if frame_result.manipulation_detected:
+        print(f"Frame {frame_result.frame}: {frame_result.manipulation_type}")
+        print(f"Confidence: {frame_result.confidence}%")
 ```
 
-- **Breath detection**: Real humans breathe, AI doesn't
-- **Emotional authenticity**: Are micro-tremors present?
-- **Formant analysis**: Natural vs synthetic vocal tract
-- **Clone fingerprinting**: Identify the source model
-- **Liveness detection**: Is this a recording or live?
+### ▸ VOICE ANALYSIS
 
-### ✍️ ghost-writer
-*AI text detection*
+Detect AI-generated or cloned voices:
 
-```bash
-vital-illusion text --input document.txt
+```python
+from vital_illusion import VoiceAnalyzer
+
+analyzer = VoiceAnalyzer()
+
+result = analyzer.analyze("audio.wav")
+
+print(f"Voice authenticity: {result.authenticity}%")
+print(f"Cloning detected: {result.cloned}")
+print(f"TTS markers: {result.tts_detected}")
 ```
 
-- **Perplexity analysis**: Human writing is unpredictable
-- **Burstiness detection**: Humans vary sentence complexity
-- **Semantic fingerprinting**: AI has telltale patterns
-- **Model attribution**: Which AI wrote this?
+### ▸ TEXT ANALYSIS
 
-### 🖼️ dream-catcher
-*Synthetic image detection*
+Detect AI-generated text:
 
-```bash
-vital-illusion image --input photo.jpg
-```
+```python
+from vital_illusion import TextAnalyzer
 
-- **GAN artifact detection**: Checkerboard patterns, frequency anomalies
-- **Diffusion fingerprints**: Stable Diffusion, Midjourney, DALL-E
-- **Physical impossibilities**: Impossible reflections, broken physics
-- **Metadata archaeology**: Was this image ever "real"?
+analyzer = TextAnalyzer()
 
----
+result = analyzer.analyze(text)
 
-## 📊 Output Example
-
-```
-██╗   ██╗██╗████████╗ █████╗ ██╗          ██╗██╗     ██╗     ██╗   ██╗███████╗██╗ ██████╗ ███╗   ██╗
-[EXAMINING] Searching for vital signs...
-
-◈ AUTHENTICITY ANALYSIS ◈
-
-Target: ceo_announcement.mp4
-Duration: 2:34
-Resolution: 1920x1080
-
-┌─────────────────────────────────────────────────────────────────────┐
-│ VERDICT: SYNTHETIC MEDIA DETECTED                                   │
-├─────────────────────────────────────────────────────────────────────┤
-│ Confidence:       ████████░░ 94.7%                                  │
-│ Type:             Face swap deepfake                                │
-│ Technique:        First-order motion model (likely)                 │
-│ Source face:      Unknown individual                                │
-│ Target face:      Matches "John Smith" (LinkedIn photo)             │
-└─────────────────────────────────────────────────────────────────────┘
-
-┌─────────────────────────────────────────────────────────────────────┐
-│ VITAL SIGNS ANALYSIS                                                │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                     │
-│ Micro-expressions:                                                  │
-│   Expected:       47 ± 12 per minute (human baseline)               │
-│   Detected:       8 per minute                                      │
-│   Assessment:     ⚠️  ABNORMALLY LOW                                │
-│                                                                     │
-│ Pulse detection (rPPG):                                             │
-│   Expected:       60-100 BPM detectable from face                   │
-│   Detected:       NO PULSE SIGNAL                                   │
-│   Assessment:     ☠️  CRITICAL - No vital signs                     │
-│                                                                     │
-│ Blink rate:                                                         │
-│   Expected:       15-20 per minute                                  │
-│   Detected:       4 per minute                                      │
-│   Assessment:     ⚠️  ABNORMALLY LOW                                │
-│                                                                     │
-│ Eye tracking:                                                       │
-│   Saccades:       Unnaturally smooth                                │
-│   Pupil response: No light adaptation detected                      │
-│   Assessment:     ⚠️  NON-HUMAN PATTERNS                            │
-│                                                                     │
-└─────────────────────────────────────────────────────────────────────┘
-
-┌─────────────────────────────────────────────────────────────────────┐
-│ TECHNICAL ARTIFACTS                                                 │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                     │
-│ Face boundary:                                                      │
-│   Frames 127-134: Visible blending artifact at jawline              │
-│   Frames 892-901: Face tracking failure, visible glitch             │
-│                                                                     │
-│ Audio sync:                                                         │
-│   Lip sync score: 0.73 (threshold: 0.90)                            │
-│   Phoneme timing: 23ms average drift (suspicious)                   │
-│                                                                     │
-│ Frequency analysis:                                                 │
-│   GAN fingerprint detected in face region                           │
-│   Compression artifacts inconsistent with claimed camera            │
-│                                                                     │
-└─────────────────────────────────────────────────────────────────────┘
-
-◈ EVIDENCE PACKAGE ◈
-Exported to: ceo_announcement_analysis.pdf
-- Frame-by-frame anomaly visualization
-- Audio waveform analysis
-- Artifact highlight video
-- Chain of custody metadata
-- Expert witness summary
-
-"The clone is more alive than the original—which is why we must kill it."
+print(f"AI probability: {result.ai_probability}%")
+print(f"Likely model: {result.likely_model}")
+print(f"Perplexity: {result.perplexity}")
 ```
 
 ---
 
-## 🚀 Installation
+## ◈ SAMPLE OUTPUT
 
-```bash
-git clone https://github.com/bad-antics/vital-illusion
-cd vital-illusion
-pip install -e .
+```
+◈ VITAL-ILLUSION v2.0 › MEDIA ANALYSIS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-# Download detection models
-vital-illusion download-models
+FILE: suspect_video.mp4
+TYPE: Video (1920x1080, 30fps, 2:47)
 
-# Run analysis
-vital-illusion --input media_file
+ANALYSIS COMPLETE
+
+▸ FACE DETECTION
+  Faces found: 2
+  Face A: SYNTHETIC
+    Method: StyleGAN2
+    Confidence: 94%
+    Artifacts: Eye reflection mismatch, hair boundary
+  Face B: AUTHENTIC
+    Confidence: 98%
+    No artifacts detected
+
+▸ TEMPORAL ANALYSIS
+  Frame-to-frame consistency: 87%
+  Temporal artifacts detected at:
+    0:34 - 0:38 (blending artifacts)
+    1:12 - 1:14 (expression discontinuity)
+    2:01 (blink rate anomaly)
+
+▸ AUDIO ANALYSIS
+  Voice detected: 1 speaker
+  TTS markers: DETECTED
+  Clone probability: 78%
+  Lip sync correlation: 0.67 (LOW)
+
+▸ METADATA
+  Original creation: STRIPPED
+  Encoding: Multiple passes detected
+  Compression artifacts: Inconsistent
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+VERDICT: SYNTHETIC MEDIA DETECTED
+CONFIDENCE: 91%
 ```
 
 ---
 
-## 🎯 Use Cases
+## ◈ DETECTION METHODS
 
-- **Corporate Security**: Verify video calls are real
-- **Journalism**: Authenticate sources before publication
-- **Legal**: Expert analysis for court proceedings
-- **Personal**: Check if "that video" is really your friend
-- **Research**: Advance deepfake detection science
+### Neural Artifact Detection
+
+AI-generated images contain subtle artifacts:
+- Eye reflections that don't match
+- Asymmetric facial features
+- Background inconsistencies
+- Unnatural hair/skin textures
+
+### Temporal Analysis
+
+Videos reveal manipulation through:
+- Frame-to-frame inconsistencies
+- Unnatural blinking patterns
+- Expression timing anomalies
+- Lip sync correlation
+
+### Spectral Analysis
+
+Audio deepfakes show:
+- Frequency artifacts from synthesis
+- Prosody anomalies
+- Breathing pattern irregularities
+- Room tone inconsistencies
+
+### Statistical Analysis
+
+AI-generated content has:
+- Different compression artifacts
+- Metadata anomalies
+- Statistical signatures of generation
+
+---
+
+## ◈ PLATFORMS
+
+### Desktop
+
+Full analysis suite with:
+- Batch processing
+- Detailed reports
+- Timeline visualization
+- Export capabilities
+
+### Mobile
+
+Quick verification on the go:
+- Camera capture and analyze
+- Import from gallery
+- AR overlay showing artifacts
+- Share verification results
+
+### API
+
+Cloud-based analysis:
+- REST API
+- High-throughput processing
+- Webhook notifications
+- Usage analytics
+
+---
+
+## ◈ INTEGRATION
+
+### With cool-memories
+
+Log verification results immutably:
+
+```python
+from vital_illusion import Analyzer
+from cool_memories import ImmutableLog
+
+log = ImmutableLog()
+analyzer = Analyzer()
+
+result = analyzer.analyze(media)
+
+await log.record(
+    event_type="media_verification",
+    data=result.to_dict(),
+    attachment=media,
+    severity="high" if result.synthetic else "low"
+)
+```
+
+---
+
+## ◈ INSTALLATION
+
+```bash
+pip install baudrillard-vital-illusion
+
+# With GPU support
+pip install baudrillard-vital-illusion[gpu]
+
+# Mobile apps
+cd apps/vital-illusion-mobile
+npm install && npx expo build
+```
 
 ---
 
 <div align="center">
-  <img src="https://img.shields.io/badge/made%20for-authenticity-9B30FF?style=for-the-badge" alt="authenticity">
-  <p><em>"The vital illusion is the only thing that separates us from our clones."</em></p>
+
+*"In a world of perfect simulation, authenticity becomes the greatest mystery."*
+
+**BAUDRILLARD SUITE**
+
 </div>

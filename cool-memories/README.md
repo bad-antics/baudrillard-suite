@@ -1,212 +1,288 @@
 <div align="center">
 
+# ◈ COOL-MEMORIES
+
 ```
- ██████╗ ██████╗  ██████╗ ██╗         ███╗   ███╗███████╗███╗   ███╗ ██████╗ ██████╗ ██╗███████╗███████╗
-██╔════╝██╔═══██╗██╔═══██╗██║         ████╗ ████║██╔════╝████╗ ████║██╔═══██╗██╔══██╗██║██╔════╝██╔════╝
-██║     ██║   ██║██║   ██║██║         ██╔████╔██║█████╗  ██╔████╔██║██║   ██║██████╔╝██║█████╗  ███████╗
-██║     ██║   ██║██║   ██║██║         ██║╚██╔╝██║██╔══╝  ██║╚██╔╝██║██║   ██║██╔══██╗██║██╔══╝  ╚════██║
-╚██████╗╚██████╔╝╚██████╔╝███████╗    ██║ ╚═╝ ██║███████╗██║ ╚═╝ ██║╚██████╔╝██║  ██║██║███████╗███████║
- ╚═════╝ ╚═════╝  ╚═════╝ ╚══════╝    ╚═╝     ╚═╝╚══════╝╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝╚══════╝╚══════╝
-                              ◈ Fragmentary Truth ◈
+ ██████╗ ██████╗  ██████╗ ██╗         
+██╔════╝██╔═══██╗██╔═══██╗██║         
+██║     ██║   ██║██║   ██║██║         
+██║     ██║   ██║██║   ██║██║         
+╚██████╗╚██████╔╝╚██████╔╝███████╗    
+ ╚═════╝ ╚═════╝  ╚═════╝ ╚══════╝    
+███╗   ███╗███████╗███╗   ███╗ ██████╗ ██████╗ ██╗███████╗███████╗
+████╗ ████║██╔════╝████╗ ████║██╔═══██╗██╔══██╗██║██╔════╝██╔════╝
+██╔████╔██║█████╗  ██╔████╔██║██║   ██║██████╔╝██║█████╗  ███████╗
+██║╚██╔╝██║██╔══╝  ██║╚██╔╝██║██║   ██║██╔══██╗██║██╔══╝  ╚════██║
+██║ ╚═╝ ██║███████╗██║ ╚═╝ ██║╚██████╔╝██║  ██║██║███████╗███████║
+╚═╝     ╚═╝╚══════╝╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝╚══════╝╚══════╝
 ```
 
-<p><em>"Cool Memories: that is to say, the photographic memories of a world without affect."</em></p>
+<img src="https://img.shields.io/badge/IMMUTABLE-LOGGING-9B30FF?style=for-the-badge&labelColor=0D0D0D" alt="immutable">
+<img src="https://img.shields.io/badge/FORENSIC-JOURNAL-FF0066?style=for-the-badge&labelColor=0D0D0D" alt="forensic">
+<img src="https://img.shields.io/badge/BLOCKCHAIN-ANCHORED-00FF41?style=for-the-badge&labelColor=0D0D0D" alt="blockchain">
 
-<p>
-  <img src="https://img.shields.io/badge/baudrillard-suite-9B30FF?style=for-the-badge" alt="suite">
-  <img src="https://img.shields.io/badge/cool--memories-forensic%20logging-FF0066?style=for-the-badge" alt="cool-memories">
-  <img src="https://img.shields.io/badge/rust-1.70+-00FF41?style=for-the-badge&logo=rust&logoColor=white" alt="rust">
-</p>
+**FRAGMENTARY TRUTH THAT CANNOT BE ALTERED**
 
-**Encrypted Forensic Journaling - Memories that cannot be falsified**
+*Immutable logging • Blockchain anchoring • Encrypted storage • Cross-platform sync*
 
 </div>
 
 ---
 
-## 🔮 Concept
+## ◈ CONCEPT
 
-Baudrillard's "Cool Memories" were fragmentary observations—truths scattered across time without narrative coherence. **Cool-Memories** applies this to forensic logging.
+Baudrillard's "Cool Memories" were fragmentary observations—truths captured in the moment. **cool-memories** provides immutable, cryptographically secured logging for research findings, anomaly detections, and forensic evidence that cannot be altered after the fact.
 
-Traditional logging: Linear, complete, easily manipulated
-Cool-Memories: Fragmentary, cryptographically immutable, self-authenticating
-
-Each fragment proves the others existed. Delete one, and the absence becomes visible.
+*"Memory is neither good nor bad. It is simply true—if it cannot be changed."*
 
 ---
 
-## ⚡ Core Features
+## ◈ FEATURES
 
-### 🔗 Hash-Chain Immutability
-Every entry is cryptographically linked to all previous entries. Modify the past, and the future breaks.
+### ▸ IMMUTABLE LOGGING
 
-### 🧩 Fragmentary Storage
-Logs are shattered across multiple storage locations. No single compromise reveals the truth.
+Every entry is cryptographically chained to previous entries:
 
-### ⏰ Temporal Proofs
-Each entry proves it existed at a specific time using external timestamp authorities.
+```python
+from cool_memories import ImmutableLog
 
-### 👁️ Witness Protocol
-Entries are silently witnessed by distributed nodes. Even the logger can't falsify history.
-
-### 🔐 Plausible Deniability
-Multiple encryption layers with different keys reveal different "truths"
-
----
-
-## 🛠️ Architecture
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                         COOL-MEMORIES                           │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│   Event → Encrypt → Fragment → Hash-Chain → Witness → Store    │
-│                                                                 │
-│   ┌─────────┐    ┌─────────┐    ┌─────────┐    ┌─────────┐     │
-│   │Fragment1│    │Fragment2│    │Fragment3│    │Fragment4│     │
-│   │ (local) │    │ (cloud) │    │(witness)│    │ (cold)  │     │
-│   └────┬────┘    └────┬────┘    └────┬────┘    └────┬────┘     │
-│        │              │              │              │           │
-│        └──────────────┴──────────────┴──────────────┘           │
-│                         │                                       │
-│                   ┌─────┴─────┐                                 │
-│                   │ Hash Root │                                 │
-│                   │ (immutable)│                                │
-│                   └───────────┘                                 │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
-
----
-
-## 📖 Usage
-
-```bash
-# Initialize cool-memories vault
-cool-memories init --fragments 4 --threshold 3
+log = ImmutableLog()
 
 # Log an event
-cool-memories log "User admin logged in from 10.0.0.1"
+entry = await log.record(
+    event_type="emf_anomaly",
+    data={
+        "reading": 52.8,
+        "baseline": 47.2,
+        "deviation_sigma": 2.3,
+        "location": {"lat": 47.6205, "lon": -122.3493}
+    },
+    severity="medium"
+)
 
-# Log with metadata
-cool-memories log --severity critical --tags "auth,breach" "Failed auth attempt"
+print(f"Entry ID: {entry.id}")
+print(f"Hash: {entry.hash}")
+print(f"Previous hash: {entry.prev_hash}")
+```
 
-# Log with automatic screenshot
-cool-memories log --capture-screen "Suspicious activity observed"
+### ▸ ATTACHMENTS
 
-# Verify log integrity
-cool-memories verify --full
+Store binary data alongside entries:
 
-# Export for legal proceedings
-cool-memories export --format legal --prove-timeline
+```python
+# Log with attachment
+entry = await log.record(
+    event_type="thermal_anomaly",
+    data=anomaly.to_dict(),
+    attachment=thermal_frame.raw_bytes,
+    attachment_type="image/thermal"
+)
+```
 
-# Search memories
-cool-memories search "authentication" --timerange "2026-01-01..now"
+### ▸ BLOCKCHAIN ANCHORING
+
+Periodically anchor hashes to public blockchains:
+
+```python
+from cool_memories import BlockchainAnchor
+
+anchor = BlockchainAnchor(network="ethereum")
+
+# Anchor current state
+receipt = await anchor.anchor(log)
+
+print(f"Block: {receipt.block}")
+print(f"Transaction: {receipt.tx_hash}")
+print(f"Proof: {receipt.merkle_proof}")
+```
+
+### ▸ VERIFICATION
+
+Verify log integrity at any time:
+
+```python
+# Verify entire log
+result = log.verify()
+
+if result.valid:
+    print("Log integrity: VERIFIED")
+    print(f"Entries: {result.entry_count}")
+    print(f"First entry: {result.first_timestamp}")
+    print(f"Last entry: {result.last_timestamp}")
+else:
+    print(f"TAMPERING DETECTED at entry {result.tampered_entry}")
 ```
 
 ---
 
-## 📊 Output Example
+## ◈ SAMPLE OUTPUT
 
 ```
- ██████╗ ██████╗  ██████╗ ██╗         ███╗   ███╗███████╗███╗   ███╗ ██████╗ ██████╗ ██╗███████╗███████╗
-[REMEMBERING] Loading fragmentary truth...
+◈ COOL-MEMORIES v2.0 › FORENSIC LOG
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-◈ MEMORY VERIFICATION REPORT ◈
+LOG STATUS
+  Entries: 847
+  First: 2024-01-15 08:47:23 UTC
+  Last: 2024-02-03 14:23:47 UTC
+  Integrity: VERIFIED ✓
+  
+BLOCKCHAIN ANCHORS
+  Latest: Ethereum block #18,847,392
+  Anchored entries: 823
+  Pending: 24
+  
+RECENT ENTRIES
 
-Vault: /var/lib/cool-memories/primary
-Entries: 47,291
-Timespan: 2025-06-15 → 2026-02-03
+▸ #847 [2024-02-03 14:23:47]
+  Type: emf_anomaly
+  Severity: MEDIUM
+  Hash: 7f3c...a892
+  Location: 47.6205°N, 122.3493°W
+  Data: +5.6µT deviation, 2.3σ
 
-┌─────────────────────────────────────────────────────────────────────┐
-│ INTEGRITY CHECK                                                     │
-├─────────────────────────────────────────────────────────────────────┤
-│ Hash chain:       ████████████████████████████████ VALID            │
-│ Witness sigs:     ████████████████████████████████ VALID            │
-│ Timestamp proofs: ████████████████████████████████ VALID            │
-│ Fragment quorum:  4/4 fragments available                           │
-│                                                                     │
-│ Overall integrity: 100%                                             │
-│ Tampering detected: NONE                                            │
-└─────────────────────────────────────────────────────────────────────┘
+▸ #846 [2024-02-03 14:12:03]  
+  Type: network_phantom
+  Severity: HIGH
+  Hash: b2d8...3f41
+  Location: 47.6205°N, 122.3493°W
+  Data: 10.0.0.47 responded, no host
 
-┌─────────────────────────────────────────────────────────────────────┐
-│ RECENT MEMORIES                                                     │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                     │
-│ [2026-02-03 14:23:17.847] [INFO] [hash:0x7a3f...]                   │
-│   "System boot completed"                                           │
-│   Witnesses: 3/3 ✓  Timestamp: RFC3161 ✓                           │
-│                                                                     │
-│ [2026-02-03 14:24:02.129] [WARN] [hash:0x8b4c...]                   │
-│   "Failed SSH attempt from 45.33.32.156"                            │
-│   Witnesses: 3/3 ✓  Timestamp: RFC3161 ✓                           │
-│   Attachment: network_capture.pcap (encrypted)                      │
-│                                                                     │
-│ [2026-02-03 14:24:03.001] [CRIT] [hash:0x9c5d...]                   │
-│   "Brute force pattern detected"                                    │
-│   Witnesses: 3/3 ✓  Timestamp: RFC3161 ✓                           │
-│   Attachment: screenshot.png (encrypted)                            │
-│   Auto-response: Firewall rule added                                │
-│                                                                     │
-└─────────────────────────────────────────────────────────────────────┘
+▸ #845 [2024-02-03 13:47:22]
+  Type: thermal_anomaly
+  Severity: HIGH
+  Hash: 9e1c...7d23
+  Attachment: thermal_frame.raw (12.4 KB)
+  Data: Cold spot -8.9°C delta
 
-┌─────────────────────────────────────────────────────────────────────┐
-│ TEMPORAL PROOF CHAIN                                                │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                     │
-│ Entry 47289 ←─┐                                                     │
-│   │           │ proves                                              │
-│ Entry 47290 ←─┼──── Entry 47291 existed at 14:24:03                 │
-│   │           │                                                     │
-│ Entry 47291 ──┘                                                     │
-│                                                                     │
-│ External anchors:                                                   │
-│   Bitcoin block 892,471 (merkle root includes our hash)             │
-│   Ethereum block 19,847,221 (commitment published)                  │
-│   RFC3161 timestamp: DigiCert authority                             │
-│                                                                     │
-│ Temporal proof confidence: ABSOLUTE                                 │
-│ (Would require breaking Bitcoin to falsify)                         │
-└─────────────────────────────────────────────────────────────────────┘
-
-◈ MEMORY STATUS ◈
-"The past is never dead. It's not even past." 
-— But now we can prove it.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TOTAL SIZE: 47.8 MB • CHAIN VALID ✓
 ```
 
 ---
 
-## 🔒 Security Model
+## ◈ ENCRYPTION
 
-### Threat: Attacker compromises logging server
-**Mitigation**: Fragments distributed across 4+ locations. Need 3/4 to reconstruct.
+All data can be encrypted at rest:
 
-### Threat: Attacker tries to modify past logs
-**Mitigation**: Hash chain breaks. Witnesses have independent copies.
+```python
+from cool_memories import ImmutableLog, Encryption
 
-### Threat: Attacker denies logs existed
-**Mitigation**: Blockchain anchors prove existence at specific times.
+# Create encrypted log
+encryption = Encryption(key_derivation="argon2")
+log = ImmutableLog(encryption=encryption, password="your-secure-password")
 
-### Threat: Legal compulsion to reveal logs
-**Mitigation**: Plausible deniability keys reveal innocent-looking decoy logs.
+# Entries are encrypted before storage
+# Attachments use AES-256-GCM
+# Key is derived from password using Argon2id
+```
 
 ---
 
-## 🚀 Installation
+## ◈ CROSS-PLATFORM SYNC
+
+Sync logs across devices while maintaining immutability:
+
+```python
+from cool_memories import SyncManager
+
+sync = SyncManager(log)
+
+# Sync to cloud
+await sync.push()
+
+# Pull from other devices
+await sync.pull()
+
+# Resolve conflicts (uses hash chain, never loses data)
+```
+
+---
+
+## ◈ PLATFORMS
+
+### Desktop
+
+Full log management with:
+- Timeline visualization
+- Search and filter
+- Export capabilities
+- Verification tools
+
+### Mobile
+
+Capture evidence on the go:
+- Quick event logging
+- Voice memo transcription
+- Photo/video capture
+- GPS tagging
+- Background sync
+
+### CLI
+
+Command-line interface for automation:
 
 ```bash
-git clone https://github.com/bad-antics/cool-memories
-cd cool-memories
-cargo build --release
-sudo ./install.sh
-cool-memories init
+# Log an event
+cool-memories log --type "observation" --data '{"note": "Strange occurrence"}'
+
+# Verify log
+cool-memories verify
+
+# Export for legal use
+cool-memories export --format legal --output evidence.pdf
+```
+
+---
+
+## ◈ LEGAL CONSIDERATIONS
+
+**cool-memories** is designed to produce logs that can serve as evidence:
+
+- Cryptographic proof of non-tampering
+- Timestamped entries with optional blockchain anchoring
+- Chain of custody through hash linkage
+- Export in legally accepted formats
+
+---
+
+## ◈ INTEGRATION
+
+All Baudrillard Suite tools integrate with cool-memories:
+
+```python
+from spectral import MultiModalScanner
+from cool_memories import ImmutableLog
+
+log = ImmutableLog()
+scanner = MultiModalScanner()
+
+# Auto-log all anomalies
+scanner.set_logger(log)
+
+async for anomaly in scanner.scan():
+    # Already logged immutably
+    print(f"Logged: {anomaly.log_entry.hash}")
+```
+
+---
+
+## ◈ INSTALLATION
+
+```bash
+pip install baudrillard-cool-memories
+
+# Mobile apps
+cd apps/cool-memories-mobile
+npm install && npx expo build
 ```
 
 ---
 
 <div align="center">
-  <img src="https://img.shields.io/badge/made%20for-immutable%20truth-9B30FF?style=for-the-badge" alt="truth">
-  <p><em>"Memory is the only paradise from which we cannot be expelled."</em></p>
+
+*"What is remembered cannot be unremembered. What is recorded cannot be unrecorded."*
+
+**BAUDRILLARD SUITE**
+
 </div>
