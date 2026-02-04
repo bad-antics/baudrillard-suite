@@ -1,0 +1,543 @@
+#!/usr/bin/env bash
+#━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#  ██████╗███████╗██╗     ██╗     ██╗   ██╗██╗      █████╗ ██████╗ 
+# ██╔════╝██╔════╝██║     ██║     ██║   ██║██║     ██╔══██╗██╔══██╗
+# ██║     █████╗  ██║     ██║     ██║   ██║██║     ███████║██████╔╝    AUTOMATA
+# ██║     ██╔══╝  ██║     ██║     ██║   ██║██║     ██╔══██║██╔══██╗    v1.0
+# ╚██████╗███████╗███████╗███████╗╚██████╔╝███████╗██║  ██║██║  ██║    
+#  ╚═════╝╚══════╝╚══════╝╚══════╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝    Baudrillard
+#━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# "It is always from the smallest seeds that the universe grows."
+#                                               - Stephen Wolfram
+#
+# CELLULAR-AUTOMATA: Explores Wolfram's computational universe through
+# elementary cellular automata. These simple rules generate complex,
+# sometimes universal computation - another hint at reality's algorithmic nature.
+#
+# THEORETICAL BASIS:
+# - Rule 110 is Turing complete (Cook 2004)
+# - Rule 30 generates apparent randomness from simple rules
+# - Rule 90 produces Sierpinski triangles (self-similar fractals)
+# - Class IV automata are at the "edge of chaos"
+#
+# THE SIMULATION CONNECTION:
+# If simple rules can generate universal computation, then a cosmic
+# simulator needs only implement simple local rules to produce
+# the complexity we observe in physics.
+#━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+set -euo pipefail
+
+VERSION="1.0.0"
+OUTPUT_DIR="${CA_OUTPUT:-$HOME/.baudrillard/automata}"
+
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+BLUE='\033[0;34m'
+MAGENTA='\033[0;35m'
+CYAN='\033[0;36m'
+WHITE='\033[1;37m'
+GRAY='\033[0;90m'
+NC='\033[0m'
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ELEMENTARY CELLULAR AUTOMATA
+# ═══════════════════════════════════════════════════════════════════════════════
+
+# Decode rule number to lookup table
+decode_rule() {
+    local rule_num="$1"
+    local -a rule_table
+    
+    for ((i=0; i<8; i++)); do
+        rule_table[$i]=$(( (rule_num >> i) & 1 ))
+    done
+    
+    # Return as space-separated string
+    echo "${rule_table[*]}"
+}
+
+# Apply rule to get next cell state
+apply_rule() {
+    local left="$1"
+    local center="$2"
+    local right="$3"
+    local -a rule_table=($4)
+    
+    # Convert neighborhood to index (binary to decimal)
+    local index=$(( left * 4 + center * 2 + right ))
+    echo "${rule_table[$index]}"
+}
+
+# Run elementary CA for one generation
+next_generation() {
+    local -a current=($1)
+    local rule_table="$2"
+    local width=${#current[@]}
+    local -a next=()
+    
+    for ((i=0; i<width; i++)); do
+        local left=${current[$(( (i - 1 + width) % width ))]}
+        local center=${current[$i]}
+        local right=${current[$(( (i + 1) % width ))]}
+        
+        next[$i]=$(apply_rule "$left" "$center" "$right" "$rule_table")
+    done
+    
+    echo "${next[*]}"
+}
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# VISUALIZATION
+# ═══════════════════════════════════════════════════════════════════════════════
+
+render_row() {
+    local -a cells=($1)
+    local on_char="${2:-█}"
+    local off_char="${3:- }"
+    local color="${4:-$CYAN}"
+    
+    for cell in "${cells[@]}"; do
+        if [[ "$cell" == "1" ]]; then
+            echo -ne "${color}${on_char}${NC}"
+        else
+            echo -n "$off_char"
+        fi
+    done
+    echo
+}
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# CA SIMULATIONS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+run_ca() {
+    local rule_num="${1:-110}"
+    local width="${2:-79}"
+    local generations="${3:-40}"
+    local init="${4:-center}"  # center, random, or explicit
+    
+    echo -e "${WHITE}ELEMENTARY CELLULAR AUTOMATON - RULE $rule_num${NC}"
+    echo -e "${GRAY}Width: $width | Generations: $generations | Init: $init${NC}"
+    echo
+    
+    # Decode rule
+    local rule_table
+    rule_table=$(decode_rule "$rule_num")
+    
+    # Display rule mapping
+    echo -e "${YELLOW}Rule $rule_num Transition Table:${NC}"
+    local neighborhoods=("111" "110" "101" "100" "011" "010" "001" "000")
+    local -a rt=($rule_table)
+    for ((i=7; i>=0; i--)); do
+        echo -e "  ${CYAN}${neighborhoods[$((7-i))]}${NC} → ${WHITE}${rt[$i]}${NC}"
+    done
+    echo
+    
+    # Initialize
+    local -a current
+    case "$init" in
+        center)
+            for ((i=0; i<width; i++)); do
+                current[$i]=0
+            done
+            current[$((width/2))]=1
+            ;;
+        random)
+            for ((i=0; i<width; i++)); do
+                current[$i]=$((RANDOM % 2))
+            done
+            ;;
+        *)
+            # Explicit init string
+            for ((i=0; i<width && i<${#init}; i++)); do
+                current[$i]=${init:$i:1}
+            done
+            for ((; i<width; i++)); do
+                current[$i]=0
+            done
+            ;;
+    esac
+    
+    # Run simulation
+    echo -e "${WHITE}Evolution:${NC}"
+    echo -e "${GRAY}$(printf '─%.0s' $(seq 1 $width))${NC}"
+    
+    for ((gen=0; gen<generations; gen++)); do
+        render_row "${current[*]}" "█" " " "$CYAN"
+        local next
+        next=$(next_generation "${current[*]}" "$rule_table")
+        current=($next)
+    done
+    
+    echo -e "${GRAY}$(printf '─%.0s' $(seq 1 $width))${NC}"
+}
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FAMOUS RULES
+# ═══════════════════════════════════════════════════════════════════════════════
+
+cmd_rule30() {
+    echo -e "${WHITE}╔═══════════════════════════════════════════════════════════════════╗${NC}"
+    echo -e "${WHITE}║  RULE 30 - THE RANDOM NUMBER GENERATOR                           ║${NC}"
+    echo -e "${WHITE}╚═══════════════════════════════════════════════════════════════════╝${NC}"
+    echo
+    echo -e "${GRAY}Rule 30 was discovered by Stephen Wolfram in 1983.${NC}"
+    echo -e "${GRAY}It generates pseudo-random patterns from a single cell.${NC}"
+    echo -e "${GRAY}Used in Mathematica's random number generator.${NC}"
+    echo
+    
+    run_ca 30 "${1:-79}" "${2:-35}"
+    
+    echo
+    echo -e "${MAGENTA}SIMULATION INSIGHT:${NC}"
+    echo -e "  Simple deterministic rules → apparent randomness"
+    echo -e "  Could explain quantum 'randomness' as deterministic but unpredictable"
+}
+
+cmd_rule90() {
+    echo -e "${WHITE}╔═══════════════════════════════════════════════════════════════════╗${NC}"
+    echo -e "${WHITE}║  RULE 90 - THE SIERPINSKI GENERATOR                              ║${NC}"
+    echo -e "${WHITE}╚═══════════════════════════════════════════════════════════════════╝${NC}"
+    echo
+    echo -e "${GRAY}Rule 90 generates Sierpinski triangles - self-similar fractals.${NC}"
+    echo -e "${GRAY}It's equivalent to XOR of neighbors.${NC}"
+    echo -e "${GRAY}This fractal pattern appears throughout nature.${NC}"
+    echo
+    
+    run_ca 90 "${1:-79}" "${2:-35}"
+    
+    echo
+    echo -e "${MAGENTA}SIMULATION INSIGHT:${NC}"
+    echo -e "  Self-similarity at all scales (fractal)"
+    echo -e "  Mirrors the fractal nature of coastlines, mountains, trees..."
+}
+
+cmd_rule110() {
+    echo -e "${WHITE}╔═══════════════════════════════════════════════════════════════════╗${NC}"
+    echo -e "${WHITE}║  RULE 110 - THE UNIVERSAL COMPUTER                               ║${NC}"
+    echo -e "${WHITE}╚═══════════════════════════════════════════════════════════════════╝${NC}"
+    echo
+    echo -e "${GRAY}Rule 110 was proven Turing-complete by Matthew Cook (2004).${NC}"
+    echo -e "${GRAY}This simple rule can simulate ANY computation.${NC}"
+    echo -e "${GRAY}It operates at the 'edge of chaos' - Class IV behavior.${NC}"
+    echo
+    
+    # Random init shows more interesting behavior
+    run_ca 110 "${1:-79}" "${2:-35}" "random"
+    
+    echo
+    echo -e "${MAGENTA}SIMULATION INSIGHT:${NC}"
+    echo -e "  ${RED}TURING COMPLETE${NC} - can compute anything computable"
+    echo -e "  Simple local rules → universal computation"
+    echo -e "  ${YELLOW}Key evidence: physics could emerge from simple rules${NC}"
+}
+
+cmd_rule184() {
+    echo -e "${WHITE}╔═══════════════════════════════════════════════════════════════════╗${NC}"
+    echo -e "${WHITE}║  RULE 184 - THE TRAFFIC FLOW MODEL                               ║${NC}"
+    echo -e "${WHITE}╚═══════════════════════════════════════════════════════════════════╝${NC}"
+    echo
+    echo -e "${GRAY}Rule 184 models traffic flow and particle behavior.${NC}"
+    echo -e "${GRAY}1s represent cars/particles, 0s are empty space.${NC}"
+    echo -e "${GRAY}Shows how complex flow emerges from simple rules.${NC}"
+    echo
+    
+    # Random init to show particle behavior
+    run_ca 184 "${1:-79}" "${2:-35}" "random"
+    
+    echo
+    echo -e "${MAGENTA}SIMULATION INSIGHT:${NC}"
+    echo -e "  Particle-like behavior from pure information rules"
+    echo -e "  Matter as pattern, not substance"
+}
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# CLASSIFICATION
+# ═══════════════════════════════════════════════════════════════════════════════
+
+classify_rules() {
+    echo -e "${WHITE}╔═══════════════════════════════════════════════════════════════════╗${NC}"
+    echo -e "${WHITE}║  WOLFRAM CLASSIFICATION OF CELLULAR AUTOMATA                     ║${NC}"
+    echo -e "${WHITE}╚═══════════════════════════════════════════════════════════════════╝${NC}"
+    echo
+    
+    cat << 'CLASS'
+  ┌─────────────────────────────────────────────────────────────────────┐
+  │  CLASS I - UNIFORMITY                                              │
+  │  All initial conditions evolve to same uniform state.              │
+  │  Examples: Rule 0, Rule 32, Rule 160                               │
+  │  Physics analogy: Heat death, maximum entropy                      │
+  ├─────────────────────────────────────────────────────────────────────┤
+  │  CLASS II - REPETITION                                             │
+  │  Evolution leads to periodic structures.                           │
+  │  Examples: Rule 4, Rule 108, Rule 218                              │
+  │  Physics analogy: Crystals, standing waves                         │
+  ├─────────────────────────────────────────────────────────────────────┤
+  │  CLASS III - CHAOS                                                 │
+  │  Seemingly random, aperiodic behavior.                             │
+  │  Examples: Rule 30, Rule 45, Rule 73                               │
+  │  Physics analogy: Turbulence, quantum fluctuations                 │
+  ├─────────────────────────────────────────────────────────────────────┤
+  │  CLASS IV - COMPLEXITY (Edge of Chaos)                             │
+  │  Complex, sometimes universal computation.                          │
+  │  Examples: Rule 110 (proven Turing complete!)                      │
+  │  Physics analogy: Life, consciousness, intelligence                │
+  └─────────────────────────────────────────────────────────────────────┘
+
+  THE EDGE OF CHAOS:
+  
+  Class IV automata exist at the boundary between order (II) and chaos (III).
+  This is precisely where computation and complexity emerge.
+  
+  ┌─────────────────────────────────────────────────────────────────────┐
+  │         Class I    Class II    │ CLASS IV │    Class III           │
+  │         (Death)    (Frozen)    │(Complex) │    (Chaos)             │
+  │     ←───────────────────────────┼──────────┼───────────────────→    │
+  │       Low entropy               │ Compute  │   High entropy         │
+  │       Too ordered               │ HERE!    │   Too random           │
+  └─────────────────────────────────────────────────────────────────────┘
+  
+  Our universe appears to be at this edge of chaos - ordered enough to
+  have structure, chaotic enough to have novelty. Optimal for computation.
+CLASS
+    echo
+}
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# THEORY
+# ═══════════════════════════════════════════════════════════════════════════════
+
+cmd_theory() {
+    cat << 'THEORY'
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║  CELLULAR AUTOMATA & SIMULATION HYPOTHESIS                                   ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
+
+  ═══════════════════════════════════════════════════════════════════════════
+  THE COMPUTATIONAL UNIVERSE HYPOTHESIS (WOLFRAM)
+  ═══════════════════════════════════════════════════════════════════════════
+  
+  Stephen Wolfram proposed that the universe might be running on a simple
+  computational rule - similar to cellular automata. Key insights:
+  
+  1. SIMPLE RULES → COMPLEX BEHAVIOR
+     Rule 110 proves that extremely simple local rules can generate
+     universal computation. Our complex universe might emerge from
+     something equally simple.
+  
+  2. COMPUTATIONAL IRREDUCIBILITY
+     For Class IV automata, there's no shortcut to predict the future.
+     You must run the computation step by step.
+     
+     This explains why physics can be computed but not predicted:
+     The universe IS the computation, and we're inside it.
+  
+  3. THE RULIAD
+     Wolfram's "ruliad" is the entangled limit of all possible
+     computations. He suggests our universe is a sampling of this
+     abstract mathematical object.
+  
+  ═══════════════════════════════════════════════════════════════════════════
+  BAUDRILLARD CONNECTION: SIMULACRA AS AUTOMATA
+  ═══════════════════════════════════════════════════════════════════════════
+  
+  ┌─────────────────────────────────────────────────────────────────────────┐
+  │                                                                         │
+  │  "The simulation is more real than the real itself."                   │
+  │                                              - Baudrillard             │
+  │                                                                         │
+  │  In CA terms: The RULE is more fundamental than the PATTERN.           │
+  │  What we experience (pattern) is just the rule playing out.            │
+  │                                                                         │
+  │  ┌─────────────┐      ┌─────────────────────────────────┐             │
+  │  │  THE RULE   │  →   │  EMERGENT REALITY (PATTERN)     │             │
+  │  │  (Compact)  │      │  (Complex but determined)       │             │
+  │  └─────────────┘      └─────────────────────────────────┘             │
+  │                                                                         │
+  │  Just as Rule 110's complexity emerges from 8 bits of instruction,     │
+  │  our universe's complexity might emerge from an equally simple rule.   │
+  │                                                                         │
+  └─────────────────────────────────────────────────────────────────────────┘
+  
+  ═══════════════════════════════════════════════════════════════════════════
+  IMPLICATIONS
+  ═══════════════════════════════════════════════════════════════════════════
+  
+  1. PHYSICS AS COMPUTATION
+     - Quantum mechanics might be the universe's update rule
+     - Spacetime might emerge from underlying discrete computation
+     - "Laws of physics" are just the rule being applied
+  
+  2. REALITY AS PATTERN
+     - We are patterns in the automaton
+     - Consciousness is a computational phenomenon within the rule
+     - "Physical matter" is just regions of the pattern
+  
+  3. THE QUESTION OF THE SIMULATOR
+     - If our universe computes via simple rules...
+     - ...those rules themselves might be computed by something simpler
+     - Infinite regress, or a fixed point?
+  
+  "Perhaps the universe is the smallest possible computer that can
+   simulate itself." - Unknown
+
+THEORY
+}
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# GAME OF LIFE (2D CA)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+cmd_life() {
+    local width="${1:-40}"
+    local height="${2:-20}"
+    local generations="${3:-50}"
+    local delay="${4:-0.1}"
+    
+    echo -e "${WHITE}CONWAY'S GAME OF LIFE${NC}"
+    echo -e "${GRAY}The most famous 2D cellular automaton${NC}"
+    echo -e "${GRAY}Width: $width | Height: $height | Generations: $generations${NC}"
+    echo
+    
+    # Initialize with random state
+    declare -A grid
+    for ((y=0; y<height; y++)); do
+        for ((x=0; x<width; x++)); do
+            grid[$x,$y]=$((RANDOM % 2))
+        done
+    done
+    
+    # Run generations
+    for ((gen=0; gen<generations; gen++)); do
+        # Clear and display
+        printf "\033[H"  # Home cursor
+        echo -e "${CYAN}Generation: $gen${NC}    "
+        
+        for ((y=0; y<height; y++)); do
+            for ((x=0; x<width; x++)); do
+                if [[ "${grid[$x,$y]}" == "1" ]]; then
+                    echo -ne "${GREEN}█${NC}"
+                else
+                    echo -n " "
+                fi
+            done
+            echo
+        done
+        
+        # Calculate next generation
+        declare -A next_grid
+        for ((y=0; y<height; y++)); do
+            for ((x=0; x<width; x++)); do
+                # Count neighbors
+                local neighbors=0
+                for ((dy=-1; dy<=1; dy++)); do
+                    for ((dx=-1; dx<=1; dx++)); do
+                        [[ $dx == 0 && $dy == 0 ]] && continue
+                        local nx=$(( (x + dx + width) % width ))
+                        local ny=$(( (y + dy + height) % height ))
+                        ((neighbors += grid[$nx,$ny]))
+                    done
+                done
+                
+                # Apply rules
+                if [[ "${grid[$x,$y]}" == "1" ]]; then
+                    # Survival: 2 or 3 neighbors
+                    if [[ $neighbors == 2 || $neighbors == 3 ]]; then
+                        next_grid[$x,$y]=1
+                    else
+                        next_grid[$x,$y]=0
+                    fi
+                else
+                    # Birth: exactly 3 neighbors
+                    if [[ $neighbors == 3 ]]; then
+                        next_grid[$x,$y]=1
+                    else
+                        next_grid[$x,$y]=0
+                    fi
+                fi
+            done
+        done
+        
+        # Copy next to current
+        for key in "${!next_grid[@]}"; do
+            grid[$key]=${next_grid[$key]}
+        done
+        
+        sleep "$delay"
+    done
+    
+    echo
+    echo -e "${MAGENTA}Game of Life demonstrates:${NC}"
+    echo -e "  - Emergence of complexity from simple rules"
+    echo -e "  - Self-replicating patterns (gliders)"
+    echo -e "  - Universal computation (proven Turing complete)"
+}
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# HELP
+# ═══════════════════════════════════════════════════════════════════════════════
+
+show_help() {
+    cat << 'HELP'
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║  CELLULAR-AUTOMATA - Computational Universe Explorer                         ║
+║  Part of the Baudrillard Reality Research Suite                              ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
+
+USAGE:
+    cellular-automata <command> [options]
+
+COMMANDS:
+    run <rule> [width] [gens]    Run any elementary CA (rule 0-255)
+    rule30 [width] [gens]        Rule 30: Random number generator
+    rule90 [width] [gens]        Rule 90: Sierpinski triangle generator
+    rule110 [width] [gens]       Rule 110: Universal computer (Turing complete!)
+    rule184 [width] [gens]       Rule 184: Traffic/particle model
+    life [w] [h] [gens]          Conway's Game of Life (2D CA)
+    classify                     Display Wolfram's 4 CA classes
+    theory                       Theoretical framework and simulation connection
+
+EXAMPLES:
+    cellular-automata rule110 79 40
+    cellular-automata run 45 60 30
+    cellular-automata life 40 20 100
+    cellular-automata classify
+
+NOTABLE RULES:
+    Rule 30:  Pseudo-random generation
+    Rule 90:  Sierpinski triangles (fractal)
+    Rule 110: Turing complete (universal computation)
+    Rule 184: Traffic flow modeling
+
+SIGNIFICANCE:
+    Cellular automata demonstrate that complex, even universal computation
+    can emerge from extremely simple local rules. This suggests our universe's
+    complexity might similarly emerge from a simple underlying rule.
+HELP
+}
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# MAIN
+# ═══════════════════════════════════════════════════════════════════════════════
+
+main() {
+    mkdir -p "$OUTPUT_DIR"
+    
+    case "${1:-help}" in
+        run)        shift; run_ca "$@" ;;
+        rule30)     cmd_rule30 "${@:2}" ;;
+        rule90)     cmd_rule90 "${@:2}" ;;
+        rule110)    cmd_rule110 "${@:2}" ;;
+        rule184)    cmd_rule184 "${@:2}" ;;
+        life)       cmd_life "${@:2}" ;;
+        classify)   classify_rules ;;
+        theory)     cmd_theory ;;
+        help|--help|-h) show_help ;;
+        *)          echo "Unknown command: $1"; show_help; exit 1 ;;
+    esac
+}
+
+main "$@"

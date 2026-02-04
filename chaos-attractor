@@ -1,0 +1,549 @@
+#!/usr/bin/env bash
+#━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#  ██████╗██╗  ██╗ █████╗  ██████╗ ███████╗
+# ██╔════╝██║  ██║██╔══██╗██╔═══██╗██╔════╝    CHAOS-ATTRACTOR
+# ██║     ███████║███████║██║   ██║███████╗    Strange Attractor & Chaos Theory
+# ██║     ██╔══██║██╔══██║██║   ██║╚════██║    Pattern Recognition System
+# ╚██████╗██║  ██║██║  ██║╚██████╔╝███████║    
+#  ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝    v1.0 | Baudrillard Suite
+#━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# "Chaos is merely order waiting to be deciphered" - José Saramago
+#
+# CHAOS-ATTRACTOR: Explores deterministic chaos in reality systems through
+# strange attractors, bifurcation diagrams, and sensitivity to initial
+# conditions. Maps the hidden order within apparent randomness.
+#
+# THEORETICAL BASIS:
+# - Lorenz Attractor: The butterfly effect in weather systems
+# - Rössler Attractor: Chemical oscillation patterns
+# - Hénon Map: Galactic orbit perturbations
+# - Logistic Map: Population dynamics at edge of chaos
+# - Mandelbrot Set: Infinite complexity from simple iteration
+#
+# The Baudrillard connection: Even in simulation, chaos reveals the
+# underlying deterministic substrate - a hint at the code beneath reality.
+#━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+set -euo pipefail
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# CONFIGURATION
+# ═══════════════════════════════════════════════════════════════════════════════
+
+VERSION="1.0.0"
+SCRIPT_NAME="chaos-attractor"
+OUTPUT_DIR="${CHAOS_OUTPUT:-$HOME/.baudrillard/chaos}"
+PRECISION="${CHAOS_PRECISION:-6}"
+ITERATIONS="${CHAOS_ITERATIONS:-10000}"
+ATTRACTOR_TYPE="${CHAOS_ATTRACTOR:-lorenz}"
+
+# Lorenz parameters (classic chaotic regime)
+LORENZ_SIGMA="${LORENZ_SIGMA:-10.0}"
+LORENZ_RHO="${LORENZ_RHO:-28.0}"
+LORENZ_BETA="${LORENZ_BETA:-2.666667}"
+
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+BLUE='\033[0;34m'
+MAGENTA='\033[0;35m'
+CYAN='\033[0;36m'
+WHITE='\033[1;37m'
+GRAY='\033[0;90m'
+NC='\033[0m'
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# MATHEMATICAL FUNCTIONS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+float_calc() {
+    awk "BEGIN {printf \"%.${PRECISION}f\", $1}"
+}
+
+lorenz_step() {
+    local x="$1" y="$2" z="$3" dt="${4:-0.01}"
+    
+    # dx/dt = σ(y - x)
+    # dy/dt = x(ρ - z) - y
+    # dz/dt = xy - βz
+    
+    local dx dy dz
+    dx=$(float_calc "$LORENZ_SIGMA * ($y - $x)")
+    dy=$(float_calc "$x * ($LORENZ_RHO - $z) - $y")
+    dz=$(float_calc "$x * $y - $LORENZ_BETA * $z")
+    
+    local new_x new_y new_z
+    new_x=$(float_calc "$x + $dx * $dt")
+    new_y=$(float_calc "$y + $dy * $dt")
+    new_z=$(float_calc "$z + $dz * $dt")
+    
+    echo "$new_x $new_y $new_z"
+}
+
+rossler_step() {
+    local x="$1" y="$2" z="$3" dt="${4:-0.01}"
+    local a="${ROSSLER_A:-0.2}" b="${ROSSLER_B:-0.2}" c="${ROSSLER_C:-5.7}"
+    
+    # dx/dt = -y - z
+    # dy/dt = x + ay
+    # dz/dt = b + z(x - c)
+    
+    local dx dy dz
+    dx=$(float_calc "-$y - $z")
+    dy=$(float_calc "$x + $a * $y")
+    dz=$(float_calc "$b + $z * ($x - $c)")
+    
+    local new_x new_y new_z
+    new_x=$(float_calc "$x + $dx * $dt")
+    new_y=$(float_calc "$y + $dy * $dt")
+    new_z=$(float_calc "$z + $dz * $dt")
+    
+    echo "$new_x $new_y $new_z"
+}
+
+henon_step() {
+    local x="$1" y="$2"
+    local a="${HENON_A:-1.4}" b="${HENON_B:-0.3}"
+    
+    # x(n+1) = 1 - ax²(n) + y(n)
+    # y(n+1) = bx(n)
+    
+    local new_x new_y
+    new_x=$(float_calc "1 - $a * $x * $x + $y")
+    new_y=$(float_calc "$b * $x")
+    
+    echo "$new_x $new_y"
+}
+
+logistic_map() {
+    local x="$1" r="${2:-3.9}"
+    # x(n+1) = rx(n)(1 - x(n))
+    float_calc "$r * $x * (1 - $x)"
+}
+
+lyapunov_exponent() {
+    # Estimate Lyapunov exponent for logistic map
+    local r="$1" iterations="${2:-1000}"
+    local x=0.5
+    local sum=0
+    
+    for ((i=0; i<iterations; i++)); do
+        local deriv
+        deriv=$(float_calc "$r * (1 - 2 * $x)")
+        deriv=$(float_calc "sqrt($deriv * $deriv)")  # abs
+        if (( $(echo "$deriv > 0" | bc -l) )); then
+            sum=$(float_calc "$sum + l($deriv)")  # natural log
+        fi
+        x=$(logistic_map "$x" "$r")
+    done
+    
+    float_calc "$sum / $iterations"
+}
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# VISUALIZATION
+# ═══════════════════════════════════════════════════════════════════════════════
+
+draw_ascii_attractor() {
+    local width="${1:-80}" height="${2:-40}"
+    local points_file="$3"
+    
+    declare -A canvas
+    local min_x=999999 max_x=-999999
+    local min_y=999999 max_y=-999999
+    
+    # Find bounds
+    while read -r x y _; do
+        [[ -z "$x" ]] && continue
+        (( $(echo "$x < $min_x" | bc -l) )) && min_x="$x"
+        (( $(echo "$x > $max_x" | bc -l) )) && max_x="$x"
+        (( $(echo "$y < $min_y" | bc -l) )) && min_y="$y"
+        (( $(echo "$y > $max_y" | bc -l) )) && max_y="$y"
+    done < "$points_file"
+    
+    local scale_x scale_y
+    scale_x=$(float_calc "($max_x - $min_x) / $width")
+    scale_y=$(float_calc "($max_y - $min_y) / $height")
+    
+    # Plot points
+    while read -r x y _; do
+        [[ -z "$x" ]] && continue
+        local px py
+        px=$(awk "BEGIN {printf \"%d\", ($x - $min_x) / $scale_x}")
+        py=$(awk "BEGIN {printf \"%d\", ($y - $min_y) / $scale_y}")
+        ((px >= 0 && px < width && py >= 0 && py < height)) && canvas[$px,$py]=1
+    done < "$points_file"
+    
+    # Render
+    local chars=("·" "░" "▒" "▓" "█")
+    for ((row=height-1; row>=0; row--)); do
+        for ((col=0; col<width; col++)); do
+            if [[ -n "${canvas[$col,$row]:-}" ]]; then
+                echo -ne "${CYAN}●${NC}"
+            else
+                echo -n " "
+            fi
+        done
+        echo
+    done
+}
+
+draw_bifurcation() {
+    local width="${1:-80}" height="${2:-30}"
+    local r_min="${3:-2.5}" r_max="${4:-4.0}"
+    
+    echo -e "${WHITE}BIFURCATION DIAGRAM${NC}"
+    echo -e "${GRAY}r: $r_min → $r_max${NC}"
+    echo
+    
+    declare -A diagram
+    local dr
+    dr=$(float_calc "($r_max - $r_min) / $width")
+    
+    for ((col=0; col<width; col++)); do
+        local r
+        r=$(float_calc "$r_min + $col * $dr")
+        
+        local x=0.5
+        # Transient
+        for ((i=0; i<200; i++)); do
+            x=$(logistic_map "$x" "$r")
+        done
+        
+        # Collect stable points
+        for ((i=0; i<50; i++)); do
+            x=$(logistic_map "$x" "$r")
+            local row
+            row=$(awk "BEGIN {printf \"%d\", $x * $height}")
+            ((row >= 0 && row < height)) && diagram[$col,$row]=1
+        done
+    done
+    
+    # Render
+    for ((row=height-1; row>=0; row--)); do
+        printf "${GRAY}%4.2f │${NC}" $(float_calc "$row / $height")
+        for ((col=0; col<width; col++)); do
+            if [[ -n "${diagram[$col,$row]:-}" ]]; then
+                echo -ne "${MAGENTA}█${NC}"
+            else
+                echo -n " "
+            fi
+        done
+        echo
+    done
+    
+    echo -e "${GRAY}     └$( printf '─%.0s' $(seq 1 $width) )${NC}"
+    printf "${GRAY}      %-10s%*s${NC}\n" "$r_min" $((width-10)) "$r_max"
+}
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ANALYSIS FUNCTIONS  
+# ═══════════════════════════════════════════════════════════════════════════════
+
+analyze_sensitivity() {
+    local initial="$1"
+    local perturbed
+    perturbed=$(float_calc "$initial + 0.000001")
+    local r="${2:-3.9}"
+    local steps="${3:-50}"
+    
+    echo -e "${WHITE}SENSITIVITY TO INITIAL CONDITIONS${NC}"
+    echo -e "${GRAY}Initial: $initial vs $perturbed (Δ = 0.000001)${NC}"
+    echo -e "${GRAY}Parameter r = $r${NC}"
+    echo
+    
+    local x1="$initial" x2="$perturbed"
+    
+    printf "${CYAN}%-6s %-15s %-15s %-15s${NC}\n" "Step" "x₁" "x₂" "Divergence"
+    echo "────────────────────────────────────────────────────────"
+    
+    for ((i=0; i<=steps; i++)); do
+        local diff
+        diff=$(float_calc "sqrt(($x1 - $x2) * ($x1 - $x2))")
+        
+        local color="$GREEN"
+        (( $(echo "$diff > 0.001" | bc -l) )) && color="$YELLOW"
+        (( $(echo "$diff > 0.1" | bc -l) )) && color="$RED"
+        
+        printf "%-6d %-15.10f %-15.10f ${color}%-15.10f${NC}\n" "$i" "$x1" "$x2" "$diff"
+        
+        x1=$(logistic_map "$x1" "$r")
+        x2=$(logistic_map "$x2" "$r")
+    done
+    
+    echo
+    echo -e "${YELLOW}⚠ The Butterfly Effect: Tiny differences amplify exponentially${NC}"
+}
+
+find_period() {
+    local r="$1" tolerance="${2:-0.0001}" max_period="${3:-32}"
+    local x=0.5
+    
+    # Transient
+    for ((i=0; i<1000; i++)); do
+        x=$(logistic_map "$x" "$r")
+    done
+    
+    local start="$x"
+    local sequence=("$start")
+    
+    for ((period=1; period<=max_period; period++)); do
+        x=$(logistic_map "$x" "$r")
+        
+        local diff
+        diff=$(float_calc "sqrt(($x - $start) * ($x - $start))")
+        
+        if (( $(echo "$diff < $tolerance" | bc -l) )); then
+            echo "$period"
+            return
+        fi
+        
+        sequence+=("$x")
+    done
+    
+    echo "chaos"
+}
+
+chaos_classification() {
+    local r="$1"
+    
+    local period
+    period=$(find_period "$r")
+    
+    if [[ "$period" == "chaos" ]]; then
+        echo -e "${RED}CHAOTIC${NC}"
+    elif [[ "$period" == "1" ]]; then
+        echo -e "${GREEN}FIXED POINT${NC}"
+    else
+        echo -e "${YELLOW}PERIOD-$period CYCLE${NC}"
+    fi
+}
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ATTRACTOR GENERATION
+# ═══════════════════════════════════════════════════════════════════════════════
+
+generate_lorenz() {
+    local iterations="${1:-$ITERATIONS}"
+    local output_file="${2:-$OUTPUT_DIR/lorenz_points.dat}"
+    
+    mkdir -p "$(dirname "$output_file")"
+    
+    echo -e "${WHITE}LORENZ ATTRACTOR GENERATION${NC}"
+    echo -e "${GRAY}Parameters: σ=$LORENZ_SIGMA, ρ=$LORENZ_RHO, β=$LORENZ_BETA${NC}"
+    echo -e "${GRAY}Iterations: $iterations${NC}"
+    echo
+    
+    local x=0.1 y=0 z=0
+    local progress=0
+    
+    > "$output_file"
+    
+    for ((i=0; i<iterations; i++)); do
+        echo "$x $y $z" >> "$output_file"
+        read -r x y z <<< "$(lorenz_step "$x" "$y" "$z")"
+        
+        # Progress
+        local new_progress=$((i * 100 / iterations))
+        if ((new_progress != progress)); then
+            progress=$new_progress
+            printf "\r${CYAN}Progress: %3d%%${NC}" "$progress"
+        fi
+    done
+    
+    echo -e "\n${GREEN}✓ Generated $iterations points → $output_file${NC}"
+}
+
+generate_rossler() {
+    local iterations="${1:-$ITERATIONS}"
+    local output_file="${2:-$OUTPUT_DIR/rossler_points.dat}"
+    
+    mkdir -p "$(dirname "$output_file")"
+    
+    echo -e "${WHITE}RÖSSLER ATTRACTOR GENERATION${NC}"
+    echo
+    
+    local x=0.1 y=0 z=0
+    
+    > "$output_file"
+    
+    for ((i=0; i<iterations; i++)); do
+        echo "$x $y $z" >> "$output_file"
+        read -r x y z <<< "$(rossler_step "$x" "$y" "$z" 0.05)"
+        printf "\r${CYAN}Progress: %3d%%${NC}" $((i * 100 / iterations))
+    done
+    
+    echo -e "\n${GREEN}✓ Generated $iterations points → $output_file${NC}"
+}
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SIMULATION CORRELATION
+# ═══════════════════════════════════════════════════════════════════════════════
+
+simulation_chaos_analysis() {
+    echo -e "${WHITE}╔═══════════════════════════════════════════════════════════════════╗${NC}"
+    echo -e "${WHITE}║  SIMULATION HYPOTHESIS: CHAOS AS COMPUTATIONAL ARTIFACT          ║${NC}"
+    echo -e "${WHITE}╚═══════════════════════════════════════════════════════════════════╝${NC}"
+    echo
+    
+    cat << 'THEORY'
+  ┌─────────────────────────────────────────────────────────────────────┐
+  │  BAUDRILLARD'S CHAOS PARADOX                                       │
+  ├─────────────────────────────────────────────────────────────────────┤
+  │                                                                     │
+  │  In a simulated reality, deterministic chaos serves multiple       │
+  │  computational purposes:                                            │
+  │                                                                     │
+  │  1. RESOURCE OPTIMIZATION                                          │
+  │     Chaos allows complex behavior from simple rules.               │
+  │     The Lorenz attractor: 3 equations → infinite complexity        │
+  │     This is computationally elegant - why simulate randomness      │
+  │     when you can derive it?                                        │
+  │                                                                     │
+  │  2. UNPREDICTABILITY GENERATION                                    │
+  │     Strange attractors ensure no observer can predict the          │
+  │     simulation's future state, maintaining the illusion of         │
+  │     free will and genuine uncertainty.                             │
+  │                                                                     │
+  │  3. BOUNDARY CONDITIONS                                            │
+  │     Chaos confines behavior to specific "phase spaces" -           │
+  │     the attractor acts as an invisible fence keeping               │
+  │     simulated entities within defined behavioral bounds.           │
+  │                                                                     │
+  │  4. EMERGENCE SUBSTRATE                                            │
+  │     From chaos emerges order: galaxies, weather, thoughts.         │
+  │     The simulation uses chaos as the foundation for all            │
+  │     emergent complexity - including consciousness.                 │
+  │                                                                     │
+  │  "The simulacrum is never what hides the truth - it is             │
+  │   truth that hides the fact that there is none."                   │
+  │                                    - Jean Baudrillard               │
+  │                                                                     │
+  └─────────────────────────────────────────────────────────────────────┘
+THEORY
+    echo
+}
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# COMMANDS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+cmd_lorenz() {
+    generate_lorenz "${1:-5000}" "${2:-}"
+    echo
+    echo -e "${CYAN}Visualizing X-Y projection:${NC}"
+    draw_ascii_attractor 60 25 "$OUTPUT_DIR/lorenz_points.dat"
+}
+
+cmd_rossler() {
+    generate_rossler "${1:-5000}" "${2:-}"
+    echo
+    echo -e "${CYAN}Visualizing X-Y projection:${NC}"
+    draw_ascii_attractor 60 25 "$OUTPUT_DIR/rossler_points.dat"
+}
+
+cmd_bifurcation() {
+    draw_bifurcation 70 25 "${1:-2.5}" "${2:-4.0}"
+}
+
+cmd_sensitivity() {
+    analyze_sensitivity "${1:-0.5}" "${2:-3.9}" "${3:-30}"
+}
+
+cmd_classify() {
+    local r="${1:-3.5}"
+    echo -e "${WHITE}CHAOS CLASSIFICATION${NC}"
+    echo -e "${GRAY}Parameter r = $r${NC}"
+    echo
+    echo -n "Behavior: "
+    chaos_classification "$r"
+}
+
+cmd_theory() {
+    simulation_chaos_analysis
+}
+
+cmd_scan() {
+    echo -e "${WHITE}REGIME SCAN: ROUTE TO CHAOS${NC}"
+    echo
+    
+    local r_values=(1.0 2.0 2.5 3.0 3.2 3.4 3.5 3.54 3.56 3.57 3.8 3.9 4.0)
+    
+    printf "${CYAN}%-8s %-20s${NC}\n" "r" "Classification"
+    echo "────────────────────────────────"
+    
+    for r in "${r_values[@]}"; do
+        printf "%-8s " "$r"
+        chaos_classification "$r"
+    done
+    
+    echo
+    echo -e "${GRAY}Key transitions:${NC}"
+    echo -e "  r ≈ 3.0: Period doubling begins"
+    echo -e "  r ≈ 3.57: Onset of chaos (Feigenbaum point)"
+    echo -e "  r = 4.0: Fully chaotic (ergodic)"
+}
+
+show_help() {
+    cat << 'HELP'
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║  CHAOS-ATTRACTOR - Strange Attractor & Chaos Theory Analysis                 ║
+║  Part of the Baudrillard Reality Research Suite                              ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
+
+USAGE:
+    chaos-attractor <command> [options]
+
+COMMANDS:
+    lorenz [n] [file]      Generate Lorenz attractor (n iterations)
+    rossler [n] [file]     Generate Rössler attractor
+    bifurcation [min] [max] Show bifurcation diagram for logistic map
+    sensitivity [x0] [r] [steps]  Demonstrate butterfly effect
+    classify [r]           Classify behavior at parameter r
+    scan                   Scan parameter space for regime transitions
+    theory                 Display Baudrillard-Chaos theory connection
+
+ENVIRONMENT:
+    CHAOS_ITERATIONS       Default iteration count (10000)
+    CHAOS_PRECISION        Floating point precision (6)
+    LORENZ_SIGMA          Lorenz σ parameter (10.0)
+    LORENZ_RHO            Lorenz ρ parameter (28.0)
+    LORENZ_BETA           Lorenz β parameter (2.666...)
+
+EXAMPLES:
+    chaos-attractor lorenz 5000
+    chaos-attractor bifurcation 2.8 4.0
+    chaos-attractor sensitivity 0.5 3.9 50
+    chaos-attractor classify 3.57
+
+THEORETICAL FRAMEWORK:
+    Chaos theory reveals the deterministic substrate beneath apparent
+    randomness. In simulation hypothesis terms, this is evidence of
+    algorithmic reality - complex behavior emerging from simple rules.
+    
+    The strange attractor is the signature of a computational universe.
+HELP
+}
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# MAIN
+# ═══════════════════════════════════════════════════════════════════════════════
+
+main() {
+    mkdir -p "$OUTPUT_DIR"
+    
+    case "${1:-help}" in
+        lorenz)      cmd_lorenz "${@:2}" ;;
+        rossler)     cmd_rossler "${@:2}" ;;
+        bifurcation) cmd_bifurcation "${@:2}" ;;
+        sensitivity) cmd_sensitivity "${@:2}" ;;
+        classify)    cmd_classify "${@:2}" ;;
+        scan)        cmd_scan ;;
+        theory)      cmd_theory ;;
+        help|--help|-h) show_help ;;
+        *)           echo "Unknown command: $1"; show_help; exit 1 ;;
+    esac
+}
+
+main "$@"
