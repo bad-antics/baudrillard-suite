@@ -1,207 +1,284 @@
 <div align="center">
 
+# ◈ SPECTRAL
+
 ```
- ██████╗██████╗ ███████╗ ██████╗████████╗██████╗  █████╗ ██╗     
+███████╗██████╗ ███████╗ ██████╗████████╗██████╗  █████╗ ██╗     
 ██╔════╝██╔══██╗██╔════╝██╔════╝╚══██╔══╝██╔══██╗██╔══██╗██║     
-╚█████╗ ██████╔╝█████╗  ██║        ██║   ██████╔╝███████║██║     
- ╚═══██╗██╔═══╝ ██╔══╝  ██║        ██║   ██╔══██╗██╔══██║██║     
-██████╔╝██║     ███████╗╚██████╗   ██║   ██║  ██║██║  ██║███████╗
-╚═════╝ ╚═╝     ╚══════╝ ╚═════╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
-                    ◈ Liminal Signal Analysis ◈
+███████╗██████╔╝█████╗  ██║        ██║   ██████╔╝███████║██║     
+╚════██║██╔═══╝ ██╔══╝  ██║        ██║   ██╔══██╗██╔══██║██║     
+███████║██║     ███████╗╚██████╗   ██║   ██║  ██║██║  ██║███████╗
+╚══════╝╚═╝     ╚══════╝ ╚═════╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
 ```
 
-<p><em>"Ghosts are never present themselves, but only by their effects."</em></p>
+<img src="https://img.shields.io/badge/LIMINAL-DETECTION-9B30FF?style=for-the-badge&labelColor=0D0D0D" alt="liminal">
+<img src="https://img.shields.io/badge/MULTI-MODAL-FF0066?style=for-the-badge&labelColor=0D0D0D" alt="multimodal">
+<img src="https://img.shields.io/badge/ANOMALY-RESEARCH-00FF41?style=for-the-badge&labelColor=0D0D0D" alt="anomaly">
 
-<p>
-  <img src="https://img.shields.io/badge/baudrillard-suite-9B30FF?style=for-the-badge" alt="suite">
-  <img src="https://img.shields.io/badge/spectral-analysis-00FF41?style=for-the-badge" alt="spectral">
-  <img src="https://img.shields.io/badge/rust-1.70+-FF0066?style=for-the-badge&logo=rust&logoColor=white" alt="rust">
-</p>
+**LISTENING TO THE SPACES BETWEEN**
 
-**Multi-Dimensional Anomaly Detection - Finding what shouldn't exist**
+*EMF analysis • Acoustic detection • Network phantoms • Cross-modal correlation*
 
 </div>
 
 ---
 
-## 🌌 Concept
+## ◈ CONCEPT
 
-**Spectral** operates in the liminal space between signal and noise, presence and absence. It's not a ghost hunter—it's an anomaly archaeologist that excavates signals from the gaps in our instrumentation.
+Ghosts, by definition, exist at the threshold—neither fully present nor fully absent. They occupy liminal spaces. **spectral** detects anomalies across multiple sensory modalities: electromagnetic fields that fluctuate without cause, sounds below human hearing, network packets from hosts that don't exist.
 
-Baudrillard wrote about the "spectral" nature of information—how signs circulate without referents, how meaning haunts the networks. Spectral takes this literally: detecting electromagnetic, acoustic, network, and data anomalies that exist in the spaces our tools normally ignore.
+*"The ghost is not what haunts us—it is what we fail to see."*
 
 ---
 
-## ⚡ Unique Detection Modes
+## ◈ DETECTION MODALITIES
 
-### 👻 EMF Spectral Analysis (Hardware Mode)
-*Requires: RTL-SDR, HackRF, or compatible SDR*
+### ▸ ELECTROMAGNETIC
+
+Detect unexplained EMF fluctuations using device sensors or external hardware:
 
 ```python
-# Detect unaccounted electromagnetic presence
-spectral --haunt --spectrum 1MHz-6GHz
+from spectral import EMFScanner
+
+emf = EMFScanner()
+
+# Use device magnetometer
+emf.use_device_sensor()
+
+# Or external hardware
+# emf.use_hardware("emf-sensor-001")
+
+async for reading in emf.monitor():
+    if reading.anomalous:
+        print(f"▸ EMF ANOMALY")
+        print(f"  Field strength: {reading.microtesla}µT")
+        print(f"  Baseline: {reading.baseline}µT")
+        print(f"  Deviation: {reading.deviation_sigma}σ")
+        print(f"  Duration: {reading.duration_ms}ms")
+        print(f"  Strangeness: {reading.strangeness}%")
 ```
 
-- **Interstitial Frequencies**: Signals in bands "nothing should use"
-- **Phantom Carriers**: RF signatures with no legitimate source
-- **Temporal Echoes**: Repeating patterns suggesting recording/playback
-- **Presence Gradients**: EMF fluctuations correlating with physical space
+### ▸ ACOUSTIC
 
-### 🔊 Acoustic Archaeology
-*Detects signals hidden in audio/silence*
+Detect infrasonic (< 20Hz) and ultrasonic (> 20kHz) signals:
 
-- **Infrasonic Presence**: Sub-20Hz vibrations (classic "haunted" frequencies)
-- **Ultrasonic Data**: Hidden communications above human hearing
-- **Silence Analysis**: What exists in the "gaps" between sounds
-- **Resonance Anomalies**: Unexpected room modes/standing waves
+```python
+from spectral import AcousticScanner
 
-### 📡 Network Phantoms
-*Traffic that shouldn't exist*
+acoustic = AcousticScanner()
 
-- **Phantom Routes**: Packets traversing impossible network paths
-- **Temporal Displacement**: Traffic with anachronistic timestamps
-- **Spectral Hosts**: Responses from IPs that don't exist
-- **Protocol Ghosts**: Valid-seeming data in invalid protocol states
+# Configure frequency ranges
+acoustic.enable_infrasonic(min_hz=0.1, max_hz=20)
+acoustic.enable_ultrasonic(min_hz=20000, max_hz=48000)
 
-### 💾 Data Revenants
-*Information that keeps returning*
+async for event in acoustic.listen():
+    if event.type == "infrasonic":
+        print(f"▸ INFRASONIC DETECTION")
+        print(f"  Frequency: {event.frequency}Hz")
+        print(f"  Duration: {event.duration}s")
+        print(f"  Note: 18.9Hz associated with unease/hallucination")
+    
+    elif event.type == "ultrasonic":
+        print(f"▸ ULTRASONIC DETECTION")
+        print(f"  Frequency: {event.frequency}Hz")
+        print(f"  Pattern: {event.pattern}")
+```
 
-- **Deletion Echoes**: Traces of data that "won't stay dead"
-- **Reincarnation Patterns**: Same data appearing across unrelated files
-- **Entropy Anomalies**: Regions of unexpected order in randomness
-- **Temporal Artifacts**: Files with impossible modification histories
+### ▸ NETWORK PHANTOMS
+
+Detect impossible network activity—responses from non-existent hosts:
+
+```python
+from spectral import NetworkPhantomScanner
+
+scanner = NetworkPhantomScanner()
+
+# Scan for phantoms
+async for phantom in scanner.hunt():
+    print(f"▸ NETWORK PHANTOM")
+    print(f"  IP: {phantom.ip}")
+    print(f"  Responded: {phantom.responded}")
+    print(f"  Host exists: {phantom.host_exists}")
+    print(f"  ARP entry: {phantom.arp_exists}")
+    print(f"  Timestamp anomaly: {phantom.timestamp_future}")
+```
+
+### ▸ ENVIRONMENTAL
+
+Temperature, pressure, humidity anomalies:
+
+```python
+from spectral import EnvironmentalScanner
+
+env = EnvironmentalScanner()
+
+async for reading in env.monitor():
+    for anomaly in reading.anomalies:
+        print(f"▸ {anomaly.type.upper()} ANOMALY")
+        print(f"  Value: {anomaly.value}")
+        print(f"  Expected: {anomaly.expected}")
+        print(f"  Location: {anomaly.location}")
+```
 
 ---
 
-## 🚀 Installation
+## ◈ CROSS-MODAL CORRELATION
+
+The most significant anomalies manifest across multiple modalities:
+
+```python
+from spectral import MultiModalScanner, CorrelationEngine
+
+scanner = MultiModalScanner()
+scanner.enable_emf()
+scanner.enable_acoustic()
+scanner.enable_network()
+scanner.enable_environmental()
+
+correlator = CorrelationEngine()
+
+async for event_group in scanner.unified_scan():
+    correlations = correlator.analyze(event_group)
+    
+    if correlations.significant:
+        print(f"▸ MULTI-MODAL ANOMALY CLUSTER")
+        print(f"  Correlation coefficient: {correlations.r}")
+        print(f"  Modalities: {', '.join(correlations.modalities)}")
+        print(f"  Temporal alignment: {correlations.temporal_sync_ms}ms")
+        print(f"  Strangeness: {correlations.combined_strangeness}%")
+        
+        # These are the interesting ones
+        if correlations.combined_strangeness > 80:
+            print(f"  ⚠️ HIGH STRANGENESS EVENT")
+```
+
+---
+
+## ◈ SAMPLE OUTPUT
+
+```
+◈ SPECTRAL v2.0 › LIMINAL ANALYSIS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+CHANNELS OPEN
+
+▸ EMF SPECTRUM
+  Baseline: 47.2µT (Earth's field normal)
+  Current: 52.8µT
+  Deviation: 2.3σ
+  ⚡ Unexplained fluctuation detected
+  Strangeness ████████░░ 79%
+
+▸ ACOUSTIC LAYER
+  Infrasonic: 18.9Hz continuous
+  Duration: 47 minutes
+  Amplitude: Below perception threshold
+  ⚠️ 18.9Hz associated with optical hallucination
+  Strangeness ███████░░░ 68%
+
+▸ NETWORK PHANTOMS
+  10.0.0.47 › Responded to ping
+  Host verification: FAILED (no such host)
+  ARP table: EMPTY for this IP
+  Timestamp: 3 minutes IN THE FUTURE
+  Strangeness █████████░ 94%
+
+▸ ENVIRONMENTAL
+  Temperature: Localized cold spot (-4.2°C delta)
+  Location: Grid C7
+  Duration: 12 minutes
+  No HVAC explanation
+  Strangeness ███████░░░ 71%
+
+▸ CORRELATION ANALYSIS
+  EMF ↔ Temperature: r=0.87 (Strong)
+  EMF ↔ Acoustic: r=0.34 (Weak)
+  Temporal sync: All events within 2.4s window
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ANOMALIES: 7 • HIGH STRANGENESS: 2 • LIMINAL INDEX: ELEVATED
+```
+
+---
+
+## ◈ MOBILE APPLICATION
+
+Real-time anomaly detection using your phone's sensors:
+
+**iOS/Android Features:**
+- Magnetometer for EMF fluctuations
+- Microphone for infra/ultrasonic
+- Camera for visual anomaly detection
+- Accelerometer for vibration
+- GPS for location tagging
+- Background monitoring
+
+```
+◈ SPECTRAL MOBILE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EMF ████████░░ 52.8µT (+5.6)
+ACOUSTIC ░░░░░░░░░░ Silent
+TEMP ██████░░░░ 18.4°C
+MOTION ░░░░░░░░░░ Stable
+
+▸ Recording • GPS: 47.6205, -122.3493
+▸ 2 anomalies logged this session
+
+ANOMALY LOG
+  14:23:07 EMF spike +12µT (3.2s)
+  14:31:44 Infrasonic 17.4Hz (8s)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+---
+
+## ◈ DESKTOP APPLICATION
+
+Native Tauri app with:
+- Real-time multi-modal dashboard
+- Historical anomaly visualization
+- Correlation analysis graphs
+- Location-based anomaly mapping
+- Session recording and export
+
+---
+
+## ◈ HARDWARE INTEGRATION
+
+External sensors for enhanced detection:
+
+| Device | Type | Integration |
+|:-------|:-----|:------------|
+| K-II EMF | EMF | USB/Bluetooth |
+| Mel Meter | EMF/Temp | USB |
+| Trifield | EMF | USB |
+| Custom Arduino | Multi | USB/Serial |
+| Raspberry Pi Pico | Multi | USB |
+
+---
+
+## ◈ INSTALLATION
 
 ```bash
-git clone https://github.com/bad-antics/spectral
-cd spectral
-cargo build --release
+pip install baudrillard-spectral
 
-# Optional: Install SDR support
-./install-sdr-support.sh
+# Mobile apps
+cd apps/spectral-mobile
+npm install && npx expo build
 
-# Optional: Install acoustic analysis
-pip install spectral-audio
+# Desktop app
+cd apps/spectral-desktop
+npm install && npm run tauri build
 ```
-
-## 📖 Usage
-
-```bash
-# Full spectrum sweep (all modes)
-sudo spectral --manifest
-
-# EMF anomaly detection (requires SDR)
-sudo spectral --haunt --sdr hackrf
-
-# Network phantom hunter
-sudo spectral --exorcise --interface eth0
-
-# Audio anomaly analysis
-spectral --listen --input microphone --duration 3600
-
-# Data archaeology
-spectral --excavate /path/to/investigate
-
-# Real-time monitoring dashboard
-spectral --vigil --dashboard
-```
-
----
-
-## 🎯 Detection Philosophy
-
-| Traditional IDS/Scanner | Spectral |
-|------------------------|----------|
-| Looks for known signatures | Finds unknown anomalies |
-| Binary: threat/safe | Spectrum of strangeness |
-| Ignores "noise" | The noise IS the signal |
-| Single-domain analysis | Multi-dimensional correlation |
-| Assumes physics is complete | Explores the gaps |
-
----
-
-## 📊 Output Example
-
-```
- ██████╗██████╗ ███████╗ ██████╗████████╗██████╗  █████╗ ██╗     
-[MANIFESTING] Opening liminal channels...
-
-◈ SPECTRAL ANALYSIS ◈
-
-┌─────────────────────────────────────────────────────────────────────┐
-│ EMF ANOMALY DETECTED                                                │
-├─────────────────────────────────────────────────────────────────────┤
-│ Frequency:        433.847 MHz (interstitial band)                   │
-│ Signal Type:      Coherent carrier, no modulation                   │
-│ Duration:         Intermittent, 3.7s bursts                         │
-│ Source Direction: 127° (azimuth), -12° (elevation)                  │
-│ Correlation:      85% match with previous anomaly (2 days ago)      │
-│ Classification:   PHANTOM CARRIER - No registered transmitter       │
-│ Strangeness:      ████████░░ 82%                                    │
-└─────────────────────────────────────────────────────────────────────┘
-
-┌─────────────────────────────────────────────────────────────────────┐
-│ NETWORK PHANTOM                                                     │
-├─────────────────────────────────────────────────────────────────────┤
-│ Source IP:        10.0.0.47 (NO HOST AT THIS ADDRESS)               │
-│ Protocol:         TCP SYN to port 31337                             │
-│ MAC Address:      00:00:00:00:00:00 (null)                          │
-│ TTL Analysis:     Impossible - suggests negative hop count          │
-│ Temporal:         Timestamp is 3 minutes IN THE FUTURE              │
-│ Classification:   TEMPORAL DISPLACEMENT                             │
-│ Strangeness:      ██████████ 97%                                    │
-└─────────────────────────────────────────────────────────────────────┘
-
-┌─────────────────────────────────────────────────────────────────────┐
-│ ACOUSTIC ANOMALY                                                    │
-├─────────────────────────────────────────────────────────────────────┤
-│ Frequency:        18.9 Hz (infrasonic)                              │
-│ Duration:         Continuous, 47 minutes                            │
-│ Amplitude:        -42 dB (below perception threshold)               │
-│ Correlation:      Room resonance mode NOT matching room dimensions  │
-│ Note:             18.9 Hz is associated with optical hallucination  │
-│ Classification:   PRESENCE GRADIENT                                 │
-│ Strangeness:      ███████░░░ 71%                                    │
-└─────────────────────────────────────────────────────────────────────┘
-
-◈ SUMMARY ◈
-Anomalies detected: 7
-High strangeness events: 3
-Correlation clusters: 2
-Liminal activity index: ELEVATED
-
-"What haunts are not the dead, but the gaps left within us."
-```
-
----
-
-## �� Research Applications
-
-- **Paranormal Investigation**: Scientific approach to anomaly detection
-- **RF Security**: Find covert transmitters and bugs
-- **Network Security**: Detect sophisticated C2 channels
-- **Data Forensics**: Recover "deleted" information patterns
-- **Acoustic Analysis**: Infrasound research, room acoustics
-- **Simulation Research**: Detect "glitches in the matrix"
-
----
-
-## 🔗 Part of the Baudrillard Suite
-
-| Tool | Concept | Status |
-|------|---------|--------|
-| [simulacra](../simulacra) | Ontological process authentication | 🟢 Active |
-| **spectral** | Liminal signal analysis | 🟢 Active |
-| [hyperreal](../hyperreal) | Memory forensics | 🟡 Building |
-| [fatal](../fatal) | Exploit framework | 🟡 Building |
-| [seduction](../seduction) | Social engineering | 🟡 Building |
 
 ---
 
 <div align="center">
-  <img src="https://img.shields.io/badge/made%20for-the%20liminal%20space-9B30FF?style=for-the-badge" alt="liminal">
-  <p><em>"The ghost is the sign that circulates without a referent."</em></p>
+
+*"Between presence and absence lies the space where ghosts dwell."*
+
+**BAUDRILLARD SUITE**
+
 </div>

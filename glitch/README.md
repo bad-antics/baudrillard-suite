@@ -1,5 +1,7 @@
 <div align="center">
 
+# ◈ GLITCH
+
 ```
  ██████╗ ██╗     ██╗████████╗ ██████╗██╗  ██╗
 ██╔════╝ ██║     ██║╚══██╔══╝██╔════╝██║  ██║
@@ -7,155 +9,293 @@
 ██║   ██║██║     ██║   ██║   ██║     ██╔══██║
 ╚██████╔╝███████╗██║   ██║   ╚██████╗██║  ██║
  ╚═════╝ ╚══════╝╚═╝   ╚═╝    ╚═════╝╚═╝  ╚═╝
-         ◈ Reality Inconsistency Scanner ◈
 ```
 
-<p><em>"The crack in everything is how the light gets in."</em></p>
+<img src="https://img.shields.io/badge/REALITY-SCANNER-9B30FF?style=for-the-badge&labelColor=0D0D0D" alt="reality">
+<img src="https://img.shields.io/badge/ENTROPY-ANALYSIS-FF0066?style=for-the-badge&labelColor=0D0D0D" alt="entropy">
+<img src="https://img.shields.io/badge/MATRIX-BUGS-00FF41?style=for-the-badge&labelColor=0D0D0D" alt="matrix">
 
-<p>
-  <img src="https://img.shields.io/badge/baudrillard-suite-9B30FF?style=for-the-badge" alt="suite">
-  <img src="https://img.shields.io/badge/glitch-detector-00FF41?style=for-the-badge" alt="glitch">
-  <img src="https://img.shields.io/badge/research-simulation-FF0066?style=for-the-badge" alt="research">
-</p>
+**FINDING BUGS IN THE MATRIX**
 
-**Finding bugs in the matrix - Detecting reality inconsistencies**
+*Entropy anomalies • Temporal inconsistencies • Synchronicity mapping • Reality drift detection*
 
 </div>
 
 ---
 
-## 🔮 Concept
+## ◈ CONCEPT
 
-If we exist in a simulation, it has bugs. **Glitch** searches for them—not metaphorically, but through rigorous statistical analysis of reality's edge cases.
+If reality is a simulation, it has bugs. Glitches in the matrix manifest as statistical impossibilities, entropy violations, temporal inconsistencies, and meaningful coincidences that exceed probability. **glitch** scans for these reality anomalies.
 
-### What We're Looking For
-
-- **Physical Constants Drift**: Do fundamental constants... stay constant?
-- **Timestamp Anomalies**: Microsecond-level inconsistencies in system time
-- **Entropy Violations**: Random numbers that aren't random enough (or too random)
-- **Synchronicity Clusters**: Meaningful coincidences beyond statistical probability
-- **Reality Render Distance**: Edge cases where "reality" seems to degrade
+*"The simulation isn't perfect. It just hopes you won't notice."*
 
 ---
 
-## ⚡ Detection Modules
+## ◈ DETECTION METHODS
 
-### 🎲 entropy-audit
-*Is randomness truly random?*
+### ▸ ENTROPY ANOMALIES
 
-- Monitor /dev/urandom, hardware RNG, quantum sources
-- Detect patterns that shouldn't exist
-- Find entropy "deserts" and "oases"
-- Track entropy quality over time
+True randomness has specific mathematical properties. When those properties are violated, something is wrong with the random number generator—or with reality itself:
 
-### ⏰ temporal-drift
-*Does time flow consistently?*
+```python
+from glitch import EntropyAnalyzer
 
-- Cross-reference multiple time sources (NTP, GPS, atomic, system)
-- Detect microsecond-level paradoxes
-- Find moments where time... hiccups
-- Log temporal inconsistencies for pattern analysis
+analyzer = EntropyAnalyzer()
 
-### 📐 constant-watch
-*Are constants actually constant?*
+# Monitor system entropy
+async for sample in analyzer.monitor_system():
+    if sample.anomalous:
+        print(f"▸ ENTROPY ANOMALY")
+        print(f"  Source: {sample.source}")
+        print(f"  Expected entropy: {sample.expected_bits} bits")
+        print(f"  Actual entropy: {sample.actual_bits} bits")
+        print(f"  Chi-square p-value: {sample.chi_p}")
+        print(f"  Interpretation: {sample.interpretation}")
 
-- Monitor floating-point consistency
-- Track mathematical operations for drift
-- Detect rounding anomalies beyond IEEE spec
-- Find "impossible" calculation results
-
-### 🎯 synchronicity
-*When coincidence exceeds probability*
-
-- Log events across multiple systems
-- Statistical analysis of correlation
-- Detect meaningful patterns in chaos
-- Find "impossible" co-occurrences
-
-### 🌫️ render-distance
-*Where does reality get fuzzy?*
-
-- Test system behavior under extreme load
-- Find states where behavior becomes undefined
-- Detect "lazy loading" of reality
-- Map the edges of the simulation
-
----
-
-## 📊 Output Example
-
+# Test hardware RNG
+result = analyzer.test_hardware_rng(samples=1_000_000)
+print(f"RNG health: {result.health}")
+print(f"Bias detected: {result.bias}")
 ```
- ██████╗ ██╗     ██╗████████╗ ██████╗██╗  ██╗
-[SCANNING] Looking for cracks in reality...
 
-◈ GLITCH DETECTION REPORT ◈
+### ▸ TEMPORAL INCONSISTENCIES
 
-┌─────────────────────────────────────────────────────────────────────┐
-│ ENTROPY ANOMALY                                                     │
-├─────────────────────────────────────────────────────────────────────┤
-│ Source:           /dev/urandom                                      │
-│ Timestamp:        2026-02-03 03:33:33.333333 (notable)              │
-│ Anomaly:          127-bit sequence repeated after 2^64 calls        │
-│ Expected:         Repetition at 2^127 minimum                       │
-│ Probability:      1 in 10^19 (should never happen)                  │
-│ Glitch Index:     ████████░░ 84%                                    │
-│ Interpretation:   Entropy pool state was... duplicated?             │
-└─────────────────────────────────────────────────────────────────────┘
+Time should flow consistently. **glitch** detects when it doesn't:
 
-┌─────────────────────────────────────────────────────────────────────┐
-│ TEMPORAL INCONSISTENCY                                              │
-├─────────────────────────────────────────────────────────────────────┤
-│ Event:            System clock regression                           │
-│ NTP Server:       time.google.com                                   │
-│ Local Clock:      2026-02-03 14:22:41.847291                        │
-│ NTP Response:     2026-02-03 14:22:41.847289 (-2μs)                 │
-│ GPS Clock:        2026-02-03 14:22:41.847293 (+2μs)                 │
-│ Anomaly:          Time went BACKWARD between measurements           │
-│ Duration:         47 nanoseconds of "missing" time                  │
-│ Glitch Index:     ███████░░░ 71%                                    │
-└─────────────────────────────────────────────────────────────────────┘
+```python
+from glitch import TemporalScanner
 
-┌─────────────────────────────────────────────────────────────────────┐
-│ SYNCHRONICITY EVENT                                                 │
-├─────────────────────────────────────────────────────────────────────┤
-│ Pattern:          Identical errors on unrelated systems             │
-│ Systems:          3 (different hardware, different networks)        │
-│ Error:            "segfault at identical address 0x7f42dead"        │
-│ Timestamp:        Within 23ms of each other                         │
-│ Shared Cause:     NONE DETECTABLE                                   │
-│ Probability:      1 in 10^27 (essentially impossible)               │
-│ Glitch Index:     ██████████ 96%                                    │
-│ Interpretation:   Reality copy-paste error?                         │
-└─────────────────────────────────────────────────────────────────────┘
+scanner = TemporalScanner()
 
-◈ REALITY STATUS ◈
-Scan duration: 72 hours
-Glitches detected: 23
-High-confidence anomalies: 3
-Reality coherence: 99.9997% (within simulation tolerance)
+# Monitor NTP sources
+scanner.add_ntp_sources([
+    "time.google.com",
+    "pool.ntp.org",
+    "time.cloudflare.com"
+])
 
-"Every glitch is a window into the source code."
+async for event in scanner.watch():
+    if event.inconsistent:
+        print(f"▸ TEMPORAL INCONSISTENCY")
+        print(f"  Sources disagree by: {event.delta_ms}ms")
+        print(f"  Beyond expected drift: {event.beyond_expected}")
+        print(f"  Local clock: {event.local_time}")
+        print(f"  Consensus: {event.consensus_time}")
+```
+
+### ▸ SYNCHRONICITY DETECTION
+
+Carl Jung called them meaningful coincidences. We call them pattern breaks:
+
+```python
+from glitch import SynchronicityTracker
+
+tracker = SynchronicityTracker()
+
+# Log events
+tracker.log_event("phone_call", {"from": "mother"})
+tracker.log_event("thought", {"about": "mother"}, timestamp=-30)  # 30s before
+
+# Analyze
+sync = tracker.analyze_recent()
+
+if sync.synchronicities:
+    for s in sync.synchronicities:
+        print(f"▸ SYNCHRONICITY DETECTED")
+        print(f"  Events: {s.event_a} ↔ {s.event_b}")
+        print(f"  Time delta: {s.delta_seconds}s")
+        print(f"  Probability: {s.probability}")
+        print(f"  Significance: {s.significance_sigma}σ")
+```
+
+### ▸ SENSOR CONSISTENCY
+
+Device sensors should agree with each other. When they don't, something's off:
+
+```python
+from glitch import SensorConsistencyChecker
+
+checker = SensorConsistencyChecker()
+
+# Compare GPS, accelerometer, gyroscope
+result = await checker.cross_validate()
+
+for inconsistency in result.inconsistencies:
+    print(f"▸ SENSOR INCONSISTENCY")
+    print(f"  Sensors: {inconsistency.sensors}")
+    print(f"  Disagreement: {inconsistency.delta}")
+    print(f"  Expected tolerance: {inconsistency.tolerance}")
 ```
 
 ---
 
-## 🚀 Installation
+## ◈ SAMPLE OUTPUT
+
+```
+◈ GLITCH v2.0 › REALITY SCAN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SCANNING REALITY...
+
+▸ ENTROPY MONITOR
+  /dev/urandom entropy rate: 7.9999 bits/byte
+  Hardware RNG: HEALTHY
+  Chi-square p-value: 0.47 (normal)
+  Status: NOMINAL
+
+▸ TEMPORAL ANALYSIS  ⚠️
+  NTP sources: 4 queried
+  Consensus: 2024-02-03 14:23:47.283 UTC
+  Local drift: +127ms (within tolerance)
+  ANOMALY: time.google.com reports +847ms
+  Single source deviation: 4.2σ
+  Strangeness ███████░░░ 72%
+
+▸ SYNCHRONICITY LOG
+  Last 24 hours: 3 events logged
+  Significant patterns: 1 detected
+  "Thought of old friend" → "Old friend called"
+  Time delta: 47 seconds
+  Base probability: 0.0003
+  Significance: 3.4σ
+  Strangeness ████████░░ 81%
+
+▸ SENSOR CONSISTENCY
+  GPS: 47.6205°N, 122.3493°W
+  Accelerometer-derived: 47.6207°N, 122.3491°W
+  Gyroscope drift: NOMINAL
+  Magnetometer: 52.1µT (expected for location)
+  All sensors: CONSISTENT
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+GLITCHES: 2 • REALITY CONFIDENCE: 94.7%
+```
+
+---
+
+## ◈ MOBILE APPLICATION
+
+Portable reality scanner:
+
+**Features:**
+- Real-time entropy analysis
+- GPS anomaly tracking
+- Time sync monitoring
+- Synchronicity journaling
+- Sensor cross-validation
+
+```
+◈ GLITCH MOBILE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+REALITY CONFIDENCE ████████░░ 94.7%
+
+MONITORS
+  ENTROPY ██████████ Normal
+  TEMPORAL ████████░░ Minor drift
+  SENSORS ██████████ Consistent
+
+SYNCHRONICITY JOURNAL
+  ▸ Log new event
+  ▸ 12 events this week
+  ▸ 2 significant patterns
+
+LATEST GLITCH
+  Type: Temporal drift
+  Source: NTP disagreement
+  Time: 14:23:47
+  Strangeness: 72%
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+---
+
+## ◈ RESEARCH FRAMEWORK
+
+**glitch** is built on several theoretical foundations:
+
+### Simulation Hypothesis Tests
+
+Proposed by Nick Bostrom, we can test for:
+- **Resource limits** — Does the simulation cut corners?
+- **Quantization** — Are there minimum units of space/time?
+- **Recursion caps** — Do strange loops break?
+
+### Entropy as Truth
+
+If the universe is deterministic at the quantum level, entropy should be perfect. If it's not:
+- The RNG is broken
+- Someone is manipulating outcomes
+- Reality has bugs
+
+### Meaningful Coincidence
+
+Jung's synchronicity suggests:
+- Causal connections we don't understand
+- Pattern recognition errors
+- Or genuine glitches in the narrative
+
+---
+
+## ◈ INTEGRATION
+
+### With cool-memories
+
+Log all detected glitches immutably:
+
+```python
+from glitch import RealityScanner
+from cool_memories import ImmutableLog
+
+log = ImmutableLog()
+scanner = RealityScanner()
+
+async for glitch in scanner.observe():
+    await log.record(
+        event_type="reality_glitch",
+        data=glitch.to_dict(),
+        severity=glitch.severity
+    )
+```
+
+### With spectral
+
+Correlate glitches with anomalies:
+
+```python
+from glitch import RealityScanner
+from spectral import MultiModalScanner
+
+glitch_scanner = RealityScanner()
+spectral_scanner = MultiModalScanner()
+
+# Look for correlations between glitches and spectral anomalies
+correlations = await correlate(glitch_scanner, spectral_scanner)
+```
+
+---
+
+## ◈ INSTALLATION
 
 ```bash
-git clone https://github.com/bad-antics/glitch
-cd glitch
-pip install -e .
+pip install baudrillard-glitch
 
-# Enable hardware monitoring
-sudo glitch --init-sensors
+# Mobile apps
+cd apps/glitch-mobile
+npm install && npx expo build
 
-# Start reality monitoring
-glitch --observe
+# Desktop app  
+cd apps/glitch-desktop
+npm install && npm run tauri build
 ```
 
 ---
 
 <div align="center">
-  <img src="https://img.shields.io/badge/made%20for-simulation%20research-9B30FF?style=for-the-badge" alt="simulation">
-  <p><em>"The bug is not in the code—the bug is in reality."</em></p>
+
+*"Every glitch is a question. Some questions have answers. Some questions have only more questions."*
+
+**BAUDRILLARD SUITE**
+
 </div>

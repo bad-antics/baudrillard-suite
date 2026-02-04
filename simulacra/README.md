@@ -1,5 +1,7 @@
 <div align="center">
 
+# ◈ SIMULACRA
+
 ```
 ███████╗██╗███╗   ███╗██╗   ██╗██╗      █████╗  ██████╗██████╗  █████╗ 
 ██╔════╝██║████╗ ████║██║   ██║██║     ██╔══██╗██╔════╝██╔══██╗██╔══██╗
@@ -9,158 +11,241 @@
 ╚══════╝╚═╝╚═╝     ╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝
 ```
 
-<p><em>"The simulacrum is never what hides the truth—it is truth that hides the fact that there is none."</em></p>
+<img src="https://img.shields.io/badge/PROCESS-AUTHENTICATION-9B30FF?style=for-the-badge&labelColor=0D0D0D" alt="process">
+<img src="https://img.shields.io/badge/ONTOLOGICAL-ANALYSIS-FF0066?style=for-the-badge&labelColor=0D0D0D" alt="ontological">
+<img src="https://img.shields.io/badge/ROOTKIT-DETECTION-00FF41?style=for-the-badge&labelColor=0D0D0D" alt="rootkit">
 
-<p>
-  <img src="https://img.shields.io/badge/baudrillard-suite-9B30FF?style=for-the-badge" alt="suite">
-  <img src="https://img.shields.io/badge/simulacra-detector-FF0066?style=for-the-badge" alt="simulacra">
-  <img src="https://img.shields.io/badge/python-3.10+-00FF41?style=for-the-badge&logo=python&logoColor=white" alt="python">
-</p>
+**DETECTING COPIES WITHOUT ORIGINALS**
 
-**Ontological Process Authenticator - Detecting copies without originals**
+*Ontological process verification • Genealogical tracing • Temporal drift analysis • Order classification*
 
 </div>
 
 ---
 
-## 🔮 Concept
+## ◈ CONCEPT
 
-Traditional rootkit detectors look for *hidden* malware. **Simulacra** operates on a different philosophical premise: in hyperreality, the fake is indistinguishable from the real because *there is no real*. 
+Baudrillard argued that in hyperreality, the distinction between original and copy becomes meaningless—there are only simulacra: copies without originals. In computing, this manifests as processes that shouldn't exist. Rootkits, injected code, hijacked threads—all are simulacra.
 
-Simulacra doesn't hunt for what's hidden—it questions what's *visible*. It analyzes the **ontological authenticity** of running processes by examining:
+**simulacra** performs ontological analysis on running processes. It doesn't just ask "is this process malicious?" It asks "does this process have a right to exist?"
 
-- **Genealogical Orphans**: Processes claiming parents that never existed
-- **Temporal Paradoxes**: Creation timestamps that violate causality
-- **Semantic Drift**: Processes whose behavior diverges from their declared identity
-- **Mimetic Residue**: Traces of copying/cloning in memory structures
-- **Hyperreal Signatures**: Code that's "too perfect" - compiled by machines, not humans
+*"The simulacrum is never what hides the truth—it is truth that hides the fact that there is none."*
 
 ---
 
-## ⚡ Unique Features
+## ◈ ORDERS OF SIMULACRA
 
-### 🧬 Ontological Fingerprinting
-Unlike hash-based detection, Simulacra builds an "existential profile" of each process:
-- **Birth narrative**: How did this process come to exist?
-- **Behavioral archaeology**: Does current behavior match origin story?
-- **Relational authenticity**: Are its relationships with other processes genuine?
+Baudrillard defined four orders of simulacra. We apply them to process analysis:
 
-### 🌀 Precession Analysis
-Detects when the "map precedes the territory":
-- Configuration files that existed before the program
-- Logs describing events that haven't happened
-- Dependencies on libraries that don't exist yet
-
-### 👁️ Third-Order Simulacra Detection
-Based on Baudrillard's orders of simulacra:
-1. First order: Faithful copies (legitimate forks)
-2. Second order: Mass-produced copies (normal processes)
-3. **Third order: Copies without originals** (pure simulation - THREAT)
-
-### 🎭 Identity Dissolution Metrics
-- Process name vs actual binary hash discrepancy
-- PID recycling patterns suggesting identity theft
-- Memory regions claiming false provenance
+| Order | Description | Computing Equivalent |
+|:------|:------------|:---------------------|
+| **1st Order** | Faithful copy of reality | Legitimate process, proper chain |
+| **2nd Order** | Copy that masks reality | Process hiding its true purpose |
+| **3rd Order** | Copy with no original | Injected code, hijacked thread |
+| **4th Order** | Fractal, self-referential | Self-modifying malware, AI payloads |
 
 ---
 
-## 🚀 Installation
+## ◈ ANALYSIS METHODS
+
+### ▸ GENEALOGICAL TRACING
+
+Every legitimate process has a birth story. **simulacra** traces this lineage:
+
+```python
+from simulacra import ProcessAnalyzer
+
+analyzer = ProcessAnalyzer()
+
+# Trace genealogy of a process
+genealogy = analyzer.trace_genealogy(pid=3847)
+
+print(f"Process: {genealogy.name}")
+print(f"Parent chain: {' → '.join(genealogy.ancestors)}")
+print(f"Birth method: {genealogy.spawn_method}")
+print(f"Legitimacy: {genealogy.legitimacy_score}%")
+
+if genealogy.paradox_detected:
+    print(f"⚠️ PARADOX: {genealogy.paradox_description}")
+```
+
+### ▸ ONTOLOGICAL SCANNING
+
+Full system scan questioning the existence of every process:
+
+```python
+from simulacra import OntologicalScanner
+
+scanner = OntologicalScanner()
+
+# Question reality
+async for result in scanner.question_reality():
+    if result.order > 1:
+        print(f"▸ {result.pid} › {result.name}")
+        print(f"  Order: {result.order} ({result.order_name})")
+        print(f"  Authenticity: {result.authenticity}%")
+        print(f"  Drift: {result.temporal_drift}")
+```
+
+### ▸ TEMPORAL DRIFT ANALYSIS
+
+Processes exist in time. Their timestamps should be consistent. **simulacra** detects temporal violations:
+
+```python
+from simulacra import TemporalAnalyzer
+
+temporal = TemporalAnalyzer()
+
+anomalies = temporal.detect_drift()
+
+for a in anomalies:
+    print(f"▸ PID {a.pid}: {a.name}")
+    print(f"  Expected start: {a.expected_start}")
+    print(f"  Actual start: {a.actual_start}")
+    print(f"  Drift: {a.drift_seconds}s")
+    print(f"  Explanation: {a.explanation}")
+```
+
+### ▸ MEMORY AUTHENTICITY
+
+Compare process memory against known-good binaries:
+
+```python
+from simulacra import MemoryVerifier
+
+verifier = MemoryVerifier()
+
+for process in verifier.scan_all():
+    if process.modified_sections:
+        print(f"▸ {process.name} [{process.pid}]")
+        for section in process.modified_sections:
+            print(f"  Section: {section.name}")
+            print(f"  Expected hash: {section.expected_hash[:16]}...")
+            print(f"  Actual hash: {section.actual_hash[:16]}...")
+            print(f"  Modification: {section.modification_type}")
+```
+
+---
+
+## ◈ SAMPLE OUTPUT
+
+```
+◈ SIMULACRA v2.0 › ONTOLOGICAL SCAN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+QUESTIONING REALITY...
+
+▸ PID 1 › systemd
+  Order: 1st (AUTHENTIC)
+  Genealogy: GENESIS (init)
+  Authenticity ██████████ 100%
+  Drift: NONE
+
+▸ PID 847 › sshd
+  Order: 1st (AUTHENTIC)
+  Genealogy: systemd → sshd
+  Authenticity ██████████ 99%
+  Drift: NONE
+
+▸ PID 2341 › nginx
+  Order: 2nd (MASKED)
+  Genealogy: systemd → nginx
+  Authenticity ████████░░ 78%
+  Drift: LOW
+  Note: Memory section .text differs from binary
+
+▸ PID 3392 › kworker/0:1  ⚠️ ALERT
+  Order: 3rd (SIMULACRUM)
+  Genealogy: PARADOX
+  Authenticity ███░░░░░░░ 31%
+  Parent PID 2 never spawned this thread
+  Temporal anomaly: Start time predates parent
+  ROOTKIT PROBABILITY: HIGH
+
+▸ PID 4501 › chrome-helper
+  Order: 4th (FRACTAL)
+  Genealogy: chrome → helper (self-spawned recursively)
+  Authenticity ████████░░ 82%
+  Self-reference detected in memory
+  Pattern: Benign (browser behavior)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PROCESSES: 247 • AUTHENTIC: 243 • SIMULACRA: 3 • ALERT: 1
+REALITY INTEGRITY: 98.8%
+```
+
+---
+
+## ◈ DESKTOP APPLICATION
+
+Native Tauri app with:
+- Real-time process tree visualization
+- Authenticity heat map
+- Genealogy graph explorer
+- Alert notifications
+- Historical analysis
+
+---
+
+## ◈ INTEGRATION
+
+### With hyperreal
+
+Deep memory forensics on suspicious processes:
+
+```python
+from simulacra import OntologicalScanner
+from hyperreal import MemoryForensics
+
+scanner = OntologicalScanner()
+forensics = MemoryForensics()
+
+for process in scanner.question_reality():
+    if process.order >= 3:
+        # Deep analysis
+        deep = await forensics.analyze(process.pid)
+        print(f"Palimpsest layers: {deep.palimpsest_count}")
+        print(f"Hidden code: {deep.hidden_code_detected}")
+```
+
+### With cool-memories
+
+Immutable logging of detections:
+
+```python
+from simulacra import OntologicalScanner
+from cool_memories import ImmutableLog
+
+log = ImmutableLog()
+scanner = OntologicalScanner()
+
+async for detection in scanner.question_reality():
+    if detection.order >= 2:
+        await log.record(
+            event_type="simulacrum_detected",
+            data=detection.to_dict(),
+            severity="high" if detection.order >= 3 else "medium"
+        )
+```
+
+---
+
+## ◈ INSTALLATION
 
 ```bash
-git clone https://github.com/bad-antics/simulacra
-cd simulacra
-pip install -e .
-sudo simulacra --awaken
+pip install baudrillard-simulacra
+
+# Desktop app
+cd apps/simulacra-desktop
+npm install && npm run tauri build
 ```
-
-## 📖 Usage
-
-```bash
-# Ontological scan - question reality
-sudo simulacra --question
-
-# Deep existential analysis
-sudo simulacra --crisis
-
-# Hunt third-order simulacra only
-sudo simulacra --pure-simulation
-
-# Generate existential report
-sudo simulacra --report existence.json
-
-# Continuous reality monitoring
-sudo simulacra --vigil
-```
-
----
-
-## 🎯 What Makes This Different
-
-| Traditional Rootkit Hunter | Simulacra |
-|---------------------------|-----------|
-| Looks for hidden processes | Questions visible processes |
-| Hash/signature matching | Ontological fingerprinting |
-| Binary: clean/infected | Spectrum of authenticity |
-| Assumes reality exists | Operates in hyperreality |
-| Reactive detection | Precognitive analysis |
-
----
-
-## 📊 Output Example
-
-```
-███████╗██╗███╗   ███╗██╗   ██╗██╗      █████╗  ██████╗██████╗  █████╗ 
-[AWAKENING] Questioning reality...
-
-◈ ONTOLOGICAL SCAN RESULTS ◈
-
-┌─────────────────────────────────────────────────────────────────────┐
-│ PID 1847 │ nginx                                                    │
-├─────────────────────────────────────────────────────────────────────┤
-│ Authenticity Index:     ████████░░ 78%                              │
-│ Simulacra Order:        2nd (mass-produced copy)                    │
-│ Genealogy:              VALID - parent 1 (systemd)                  │
-│ Temporal Coherence:     VALID - timeline consistent                 │
-│ Semantic Drift:         LOW - behavior matches identity             │
-│ Verdict:                AUTHENTIC                                   │
-└─────────────────────────────────────────────────────────────────────┘
-
-┌─────────────────────────────────────────────────────────────────────┐
-│ PID 3392 │ sshd                                                     │
-├─────────────────────────────────────────────────────────────────────┤
-│ Authenticity Index:     ███░░░░░░░ 31%                              │
-│ Simulacra Order:        ⚠️  3rd (COPY WITHOUT ORIGINAL)             │
-│ Genealogy:              PARADOX - claims parent PID never existed   │
-│ Temporal Coherence:     VIOLATION - created before parent           │
-│ Semantic Drift:         HIGH - outbound traffic to unexpected ports │
-│ Mimetic Residue:        DETECTED - memory shows cloning artifacts   │
-│ Verdict:                ☠️  SIMULACRUM DETECTED                     │
-└─────────────────────────────────────────────────────────────────────┘
-
-◈ REALITY STATUS ◈
-Processes questioned: 247
-Authentic beings: 244
-Simulacra detected: 3
-Reality integrity: 98.8%
-
-"The desert of the real welcomes you."
-```
-
----
-
-## 🔗 Part of the Baudrillard Suite
-
-| Tool | Concept | Status |
-|------|---------|--------|
-| **simulacra** | Ontological process authentication | 🟢 Active |
-| [hyperreal](../hyperreal) | Memory forensics beyond reality | 🟡 Building |
-| [spectral](../spectral) | Anomaly & signal analysis | 🟡 Building |
-| [fatal](../fatal) | Object-oriented exploit framework | 🟡 Building |
-| [seduction](../seduction) | Social engineering framework | 🟡 Building |
 
 ---
 
 <div align="center">
-  <img src="https://img.shields.io/badge/made%20for-the%20desert%20of%20the%20real-9B30FF?style=for-the-badge" alt="desert">
-  <p><em>"Welcome to the desert of the real."</em></p>
+
+*"The map precedes the territory—sometimes the process precedes itself."*
+
+**BAUDRILLARD SUITE**
+
 </div>
