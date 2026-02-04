@@ -21,7 +21,7 @@
 
 *Cross-platform security research toolkit • Desktop/Mobile/Web/Hardware • AI Race Condition Research*
 
-[Discord](https://discord.gg/baudrillard) • [Documentation](https://baudrillard.dev) • [Research Papers](https://baudrillard.dev/research)
+[Documentation](https://baudrillard.dev) • [Research Papers](https://baudrillard.dev/research)
 
 </div>
 
@@ -309,7 +309,7 @@ for phantom in phantoms:
 
 Join the movement to map the boundaries of reality.
 
-**Discord** › Real-time collaboration, research discussion
+**GitHub Discussions** › Real-time collaboration, research discussion
 **GitHub Discussions** › Long-form research, feature requests  
 **Research Papers** › Published findings, methodologies
 **Hardware Designs** › Open-source sensor schematics
@@ -383,6 +383,6 @@ async for crack in glitch.observe():
 
 <img src="https://img.shields.io/badge/made%20by-bad--antics-9B30FF?style=for-the-badge&logo=github&labelColor=0D0D0D" alt="bad-antics">
 
-**[Website](https://baudrillard.dev)** • **[Discord](https://discord.gg/baudrillard)** • **[Twitter](https://twitter.com/baudrillard_dev)**
+**[Website](https://baudrillard.dev)** • **[Twitter](https://twitter.com/baudrillard_dev)**
 
 </div>
