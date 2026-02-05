@@ -383,6 +383,6 @@ async for crack in glitch.observe():
 
 <img src="https://img.shields.io/badge/made%20by-bad--antics-9B30FF?style=for-the-badge&logo=github&labelColor=0D0D0D" alt="bad-antics">
 
-**[Website](https://baudrillard.dev)** • **[Twitter](https://twitter.com/baudrillard_dev)**
+**[Website](https://baudrillard.dev)** • **[Twitter](https://twitter.com/AnonAntics)**
 
 </div>
