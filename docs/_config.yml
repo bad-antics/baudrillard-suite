@@ -1,0 +1,38 @@
+title: Baudrillard Suite
+description: Cross-platform security research toolkit for the hyperreal age
+baseurl: "/baudrillard-suite"
+url: "https://bad-antics.github.io"
+theme: minima
+markdown: kramdown
+highlighter: rouge
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Navigation
+header_pages:
+  - index.md
+  - tools.md
+  - quickstart.md
+  - blog.md
+
+# Social
+github_username: bad-antics
+twitter_username: badantics
+
+# Analytics (optional)
+google_analytics: 
+
+# Collections
+collections:
+  tools:
+    output: true
+    permalink: /tools/:name/
+
+defaults:
+  - scope:
+      path: ""
+      type: "tools"
+    values:
+      layout: "tool"
