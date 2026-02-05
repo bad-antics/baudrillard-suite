@@ -129,7 +129,7 @@ Document everything, make knowledge accessible, build guides.
 
 ## ◈ COMMUNICATION CHANNELS
 
-### Discord
+### Twitter
 
 Real-time collaboration and discussion.
 
@@ -217,9 +217,9 @@ Question assumptions. Explore the unknown. Stay humble.
 
 ## ◈ GETTING STARTED
 
-### 1. Join Discord
+### 1. Follow on Twitter
 
-Get access to the community and introduce yourself.
+Follow us for updates and join the conversation.
 
 ### 2. Set Up Tools
 
@@ -284,6 +284,6 @@ Long-term direction is guided by a rotating committee of active contributors.
 *"The real is not impossible, it is simply more and more artificial."*  
 — Jean Baudrillard
 
-**[Discord](https://discord.gg/baudrillard)** • **[GitHub](https://github.com/bad-antics/baudrillard-suite)** • **[Twitter](https://twitter.com/baudrillard_dev)**
+**[Twitter](https://twitter.com/AnonAntics)** • **[GitHub](https://github.com/bad-antics/baudrillard-suite)** • **[Twitter](https://twitter.com/AnonAntics)**
 
 </div>
