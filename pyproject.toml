@@ -1,0 +1,67 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "baudrillard-suite"
+version = "1.0.0"
+description = "Cross-platform security research toolkit — anomaly detection, memory forensics, and process authentication"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.9"
+authors = [
+    {name = "bad-antics", email = "badxantics@gmail.com"}
+]
+keywords = ["security", "forensics", "rootkit-detection", "anomaly-detection", "memory-forensics"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Security",
+    "Topic :: System :: Monitoring",
+]
+
+dependencies = [
+    "psutil>=5.9",
+    "rich>=13.0",
+    "click>=8.0",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+hardware = ["pyserial>=3.5", "rtlsdr>=0.3", "nfcpy>=1.0"]
+ml = ["numpy>=1.24", "scikit-learn>=1.3", "torch>=2.0"]
+full = ["baudrillard-suite[hardware,ml]"]
+
+[project.urls]
+Homepage = "https://github.com/bad-antics/baudrillard-suite"
+Repository = "https://github.com/bad-antics/baudrillard-suite"
+Issues = "https://github.com/bad-antics/baudrillard-suite/issues"
+
+[project.scripts]
+baudrillard = "baudrillard.cli:main"
+simulacra = "simulacra.simulacra:main"
+hyperreal = "hyperreal.hyperreal:main"
+
+[tool.setuptools.packages.find]
+include = [
+    "simulacra*",
+    "hyperreal*",
+    "fatal*",
+    "seduction*",
+    "desert*",
+    "transparency*",
+    "spectral*",
+    "glitch*",
+    "cool-memories*",
+    "ambient*",
+    "oracle-break*",
+]
