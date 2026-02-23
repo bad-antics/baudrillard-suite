@@ -328,21 +328,50 @@ We need:
 
 ## ◈ INSTALLATION
 
+### Python Tools (recommended)
+
 ```bash
-# Clone the monorepo
+# Clone and install from source
 git clone https://github.com/bad-antics/baudrillard-suite
 cd baudrillard-suite
+pip install -e .
 
-# Install core libraries
-pip install baudrillard-core
+# Or install with hardware support (SDR, RFID, NFC)
+pip install -e ".[hardware]"
 
-# Build desktop apps
-cd apps/desktop
-npm install && npm run tauri build
+# Or install with ML support (anomaly detection models)
+pip install -e ".[ml]"
 
-# Build mobile apps  
-cd apps/mobile
-npm install && npx expo build
+# Or install everything
+pip install -e ".[full]"
+```
+
+### Individual Tools
+
+Each tool can also be used standalone:
+
+```bash
+# Use any tool directly
+cd simulacra && python simulacra.py --help
+cd hyperreal && python hyperreal.py --help
+```
+
+### Desktop App (Tauri — coming soon)
+
+> ⚠️ The desktop app is under active development. Currently, all tools are available via Python CLI.
+
+### Troubleshooting
+
+**`pip install` fails with "baudrillard-core not found":**
+The suite installs from source, not PyPI. Use `pip install -e .` from the cloned repo root.
+
+**`ModuleNotFoundError`:**
+Make sure you installed with `-e` (editable mode) from the repo root directory.
+
+**Permission errors:**
+Use `pip install --user -e .` or a virtual environment:
+```bash
+python3 -m venv venv && source venv/bin/activate && pip install -e .
 ```
 
 ---
