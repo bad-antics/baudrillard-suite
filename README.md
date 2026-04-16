@@ -117,7 +117,8 @@ ONTOLOGICAL SCAN ACTIVE
   Order: 2nd • Genealogy: VALID • Drift: LOW
   
 ▸ PID 3392 › sshd  ⚠️ ALERT
-  Authenticity ███░░░░░░░ 31%
+# Baudrillard Suite — Philosophical Security Toolkit
+
   Order: 3rd (SIMULACRUM) • Genealogy: PARADOX
   Parent PID never existed • Temporal violation detected
   
