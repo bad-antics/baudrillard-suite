@@ -112,7 +112,8 @@ Built with **Tauri** (Rust backend, web frontend) for native performance with mo
 ONTOLOGICAL SCAN ACTIVE
 
 ▸ PID 1847 › nginx
-  Authenticity ████████░░ 78%
+# Baudrillard Suite — Philosophical Security Toolkit
+
   Order: 2nd • Genealogy: VALID • Drift: LOW
   
 ▸ PID 3392 › sshd  ⚠️ ALERT
